@@ -30,17 +30,8 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RTYj'
 
 
 @app.route('/',methods=['GET', 'POST'])
-def admin_():
-    return redirect('/login')
-
-
-@app.route('/<string:viewid>/',methods=['GET', 'POST'])
-def viewid(viewid):
-    try:
-        return showadmin(viewid)
-    except:
-        return bugcode(traceback)
-
+def index():
+    return redirect('admin/login')
 
 @app.route('/api/<int:subid>', methods=['GET','POST'])
 def api(subid):
@@ -91,7 +82,8 @@ def pay(subid):
 
 
 
-
+from admin.routes import admin
+app.register_blueprint(admin,url_prefix='/admin')
 
 
 
