@@ -19,8 +19,8 @@ ATTACH_ROOTR = r'/var/games/%s/static/data'%CLIENT_NAME
 
 #################数据库相关配置
 
-scott='postgres'#用户名
-tiger = 'Yang9264'#密码
+scott='pgsql'#用户名
+tiger = 'Y123456'#密码
 host = '127.0.0.1'#地址
 port='5432'#端口
 ################
