@@ -1,0 +1,65 @@
+{% extends "basic.html" %}
+{% block breadcrumb %}
+	{{breadcrumb}}
+
+{% endblock %}
+{% block form_block %}
+		<form onsubmit="return formcheck(this)" enctype="multipart/form-data" method="post" action="" class="vbox form-horizontal form" name="frmMain">
+{% endblock %}
+{% block contentpanel %}
+		{% if need_editor == 1 %}
+            <link href="../../static/hadmin/css/plugins/summernote/summernote.css" rel="stylesheet">
+            <link href="../../static/hadmin/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+            <script src="../../static/hadmin/js/plugins/summernote/summernote.min.js"></script>
+            <script src="../../static/hadmin/js/plugins/summernote/summernote-zh-CN.js"></script>
+		{% endif %}
+			<div class="main" style="width:100%;">
+					{{html_hidden}}
+                    {% block html_border_top %}
+                        <section class="panel panel-default">
+                            <!--<header class="panel-heading font-bold">{{navTitle}}</header>-->
+                            <div class="title_comm"><span class="block_blue"></span><b style="color:#333333;">{{navTitle}}</b></div>
+
+                            {% block table_list %}
+                            <div class="panel-body">
+                            <!--div class="table-list" style="min-height:1400px;"-->
+                            {% endblock%}
+                    {% endblock %}
+                    
+                            {% block html_local %}{% endblock %}
+                            {{html_upload}}
+                            {% block otherInfo %}{% endblock %}
+                            </div>
+                            {% block page_script %}
+                            <script>
+                                function formcheck_2(form){
+
+                                    return true;
+
+                                }
+        
+                            </script>
+                            {% endblock %}
+                        
+                    {% block html_border_bottom %}
+                        </section>
+                    {% endblock %}
+				
+			</div>
+			<style>
+                .padder {
+                    padding-left:3%;
+                    padding-right:3%;
+                }
+                .main{
+                    position: relative;
+                    padding-top:5px;
+                    margin-bottom:20px;
+                    background-color:#ffffff;
+                    border:1px solid transparent;
+                    border-radius:4px;
+                    -webkit-box-shadow:0 8px 15px rgba(0, 0, 0, 0.5);
+                    box-shadow:0 8px 15px rgba(0, 0, 0, 0.5);
+                }
+            </style>	
+{% endblock %}

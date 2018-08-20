@@ -1,0 +1,171 @@
+{% extends "local.html" %}
+	
+{% block html_local %}
+<table class="tb single-table">
+	<tr>
+		<td colspan="6">
+			<div id="form2"></div>
+		</td>
+	</tr>
+	<tr>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">优惠券类型:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="type" value="{{item.type}}"/>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">口令:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="pwd" value="{{item.pwd}}"/>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td width="100">
+			<label for="">需要积分:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="needscore" value="{{item.needscore}}"/>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">优惠对象编号:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="refid" value="{{item.refid}}"/>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td width="100">
+			<label for="">优惠券名称</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="name" value="{{item.name}}"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="100">
+			<label for="">优惠券数量:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="numbertotle" value="{{item.numbertotle}}"/>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">优惠券金额:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control" name="money" value="{{item.money}}"/>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">消费满多少可用:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="use_money" value="{{item.use_money}}"/>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">每人限领多少张:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="numberpersonmax" value="{{item.numberpersonmax}}"/>
+		</td>
+	</tr>
+
+
+
+	<tr >
+		<td width="100">
+			<label for="">生效时间:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="datestart" value="{{item.datestart}}" onclick="setdaytime()" readonly="readonly"/>
+		</td>
+	</tr>
+
+	<tr >
+		<td width="100">
+			<label for="">截止时间:</label>
+		</td>
+		<td>
+			<input type="text" class="form-control"  name="dateend" value="{{item.dateend}}" onclick="setdaytime()" readonly="readonly"/>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td width="100">
+			<label for="">状态:</label>
+		</td>
+		<td>
+			<select class="form-control" name="status" >
+				<option value="0" {{'selected="selected"' if item.status|string=='0'}}>正常</option>
+				<option value="1" {{'selected="selected"' if item.status|string=='1'}}>失效</option>
+				<option value="2" {{'selected="selected"' if item.status|string=='2'}}>已过期/结束</option>
+			</select>
+		</td>
+	</tr>
+
+</table>
+
+
+{% endblock %}
+
+{% block page_script %}
+<script>
+function setdaytime(obj){return WdatePicker({dateFmt:'yyyy-MM-dd'});}
+function formcheck_2(form){
+    /* 
+	var login_id = $('input[name=login_id]').val(); 
+	var usr_name = $('input[name=usr_name]').val(); 
+	var password = $("input[name=password]").val();
+	var mobile = $("input[name=mobile]").val();
+	var dept_id = $("select[name=dept_id]").val();
+	//var flag = false;
+	if(login_id == ''){
+		layer.alert("请输入登陆名");
+		return false;
+	}
+	if(usr_name == ''){
+		layer.alert("请输入用户名");
+		return false;
+	}
+	if(password == ''){
+		layer.alert("请输入密码");
+		return false;
+	}
+	if(mobile == ''){
+		layer.alert("请输入手机");
+		return false;
+	}
+	if(dept_id == ''){
+		layer.alert("请选择部门");
+		return false;
+	}*/
+	return true;
+	
+}
+</script>
+
+{% endblock %}
+	

@@ -1,0 +1,118 @@
+{% extends "main.html" %}
+
+
+
+{% block topSearch %}
+<table class="table table-bordered tb searchtbl">
+    <tbody>
+
+        <tr class="search-submit">
+            <td colspan="8">
+                {% if lR[0] != '1' %}
+
+                <button type="button" class="btn btn-success btn-sm" onclick="main_add()"><i class="fa fa-plus"></i> 增加</button>
+
+                {% endif %}
+            </td>
+         </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+
+{% block mGrid %}
+
+	<table class="table table-bordered"><!--这里要加基类-->
+
+		<thead>
+
+			<tr style="background-color:#e5e5e5" bgcolor="#ffffff">
+
+				{%for n in NL[1:]%}
+				<th style="text-align:{{n[3]}};width:{{n[2]}};">{{n}}</th>
+				{%endfor%}
+				<th style="text-align:center">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			{% for row in dataList %}
+				<tr bgcolor="#ffffff">
+
+					{% set i = 1 %}
+					{% for e in row%}
+
+					{% if loop.index == 5%}
+					<td style="text-align:{{NL[i][3]}};"><img src="{{e}}" style="max-width:100px;"/></td>
+					{% else%}
+					<td style="text-align:{{NL[i][3]}};">{{e}}</td>
+					{%endif%}
+					{% set i=i+1 %}
+					{% endfor %}
+					<td style="text-align:center;">
+						{% if lR[1] == '' %}
+						<a class="btn btn-xs btn-info" onclick="main_update({{row[0]}})" title="编辑"><i class="fa fa-edit"></i></a>
+						{% endif %}
+						{% if lR[2] == '' %}
+						<a class="btn btn-xs btn-warning" onclick="main_delete({{row[0]}});" title="删除"><i class="fa fa-trash-o"></i></a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table><!---->
+{% endblock %}
+        
+	
+{% block page_script %}
+<script>
+$(function(){
+	$("input[name=pk]").val('');
+	$("input[name=part]").val('main');
+});
+</script>
+
+<script>
+function main_post(action){
+	if($("input[name=item_id]:checked").length == 0){
+		layer.alert("请选择商品");
+		return false;
+	}
+	$("input[name=action]").val(action);
+	$("input[name=part]").val('post');                
+	$("form[name=frmMain]")[0].submit();      
+}
+$(function(){
+	$("select[name=set_ctype]").change(function(){
+		var v = $(this).val();
+		if(v != ''){
+			if($("input[name=item_id]:checked").length == 0){
+				layer.alert("请选择商品");
+				$(this).val('');
+				return false;
+			}
+			$("input[name=action]").val('setCtype');
+			$("input[name=part]").val('post');                
+			$("form[name=frmMain]")[0].submit();    
+		}
+	});
+	
+	$("select[name=set_lb]").change(function(){
+		var v = $(this).val();
+		if(v != ''){
+			if($("input[name=item_id]:checked").length == 0){
+				layer.alert("请选择商品");
+				$(this).val('');
+				return false;
+			}
+			$("input[name=action]").val('setLb');
+			$("input[name=part]").val('post');                
+			$("form[name=frmMain]")[0].submit();    
+		}
+	});
+});
+</script>
+{% endblock %}
+        
+            
+	

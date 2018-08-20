@@ -1,0 +1,503 @@
+{% extends "local.html" %}
+
+
+{% block MUL_BTNS %}
+<table class="tb single-table clearfix top-line">
+    <tr>
+        <td style="text-align:left;">
+            <input type="submit" class="btn btn-sm btn-info" name="add_save" value="提交"/>
+            <input type="reset" class="btn btn-sm btn-info" name="add_save" value="重置"/>
+            {{sUrlBack}}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+
+{% block html_local %}
+    <table class="tb single-table">
+            <tr>
+                <td colspan="6">
+                    <div id="form2"></div>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <label style="color:red;"></label>
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    <label>订单号：</label>
+                </td>
+                 <td >
+                     <input type="text" class="form-control"  name="order_num" value="{{item.order_num}}" readonly="readonly"/>
+                </td>
+                <td width="100">
+                    <label >当前状态：</label>
+                </td>
+                <td width="250">
+                   <input type="text" class="form-control"  name="order_num" value="{{item.txt1}}" readonly="readonly"/>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >当前金额：</label>
+                </td>
+                <td width="250">
+                   <input type="text" class="form-control"  name="order_num" value="{{item.total}}" readonly="readonly"/>
+                </td>
+
+                <td width="100">
+                    <label >优惠金额：</label>
+                </td>
+                <td width="250">
+                   <input type="text" class="form-control"  name="order_num" value="{{item.txt1}}" readonly="readonly"/>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >优惠金额：</label>
+                </td>
+                <td width="250">
+                   <input type="text" class="form-control"  name="order_num" value="{{item.txt1}}" readonly="readonly"/>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >当前状态：</label>
+                </td>
+                <td width="250">
+                    <select class="form-control" name="shopid">
+                        {% for dl in shoplist %}
+                        <option value="{{dl[0]}}"{{' selected="selected"' if item.categoryid|string == '%s'%dl[0] }}>{{dl[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+             <tr>
+                <td width="100">
+                    <label >商品分类：</label>
+                </td>
+                <td width="250">
+                    <select class="form-control" name="categoryid">
+                        {% for dl in goodlist %}
+                        <option value="{{dl[0]}}"{{' selected="selected"' if item.categoryid|string == '%s'%dl[0] }}>{{dl[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+             </tr>
+
+
+             <tr>
+                <td width="100">
+                    <label >选择物流模板：</label>
+                </td>
+                <td width="250">
+                    <select class="form-control" name="logisticsid">
+                        {% for dl in logistics %}
+                        <option value="{{dl[0]}}"{{' selected="selected"' if item.categoryid|string == '%s'%dl[0] }}>{{dl[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+             </tr>
+
+
+
+    </table>
+
+{% endblock %}
+
+
+{% block page_script %}
+<SCRIPT language="Javascript" src="static/js/My97DatePicker/WdatePicker.js"></SCRIPT>
+<script>
+function setdaytime(obj){return WdatePicker({dateFmt:'yyyy-MM-dd HH:MM:ss'});}
+function formcheck_2(form){
+            
+	var title = $('input[name=title]').val(); 
+	
+	if(title == ''){
+		layer.alert("请输入首页名称");
+		return false;
+	}
+	return true
+}
+
+
+
+
+$(function(){
+	if($('#feetype').val()=='0'){
+		$('.unitName').text('件');
+	}else{
+		$('.unitName').text('KG');
+	}
+    /*
+    var result = new Array();
+    $("input[name=propertyid]:checkbox").each(function() {
+        if ($(this).is(":checked")) {
+            result.push($(this).attr("value"));
+        }
+    });
+
+
+    if (result.length>0){
+        var ids=result.join(",")
+        var pk=$("input[name=pk]").val()
+        console.log(pk)
+        $.ajax({
+            url:"admin?viewid=A020&part=addids&ids="+ids+"&pk="+pk,
+            async:false,
+            success: function(data){
+               $('#kuaidi').append(data)
+            }
+        });
+    }*/
+    var pk=$("input[name=pk]").val()
+    var property_sel1=$("select[name=property_sel1]").val();
+    var property_seln='{{property_seln}}'
+    if (property_seln!=''){
+        var ids=property_sel1
+        var idsn=property_seln
+
+        $.ajax({
+                url:"admin?viewid=A020&part=addsel&ids="+ids+"&idsn="+idsn,
+                async:false,
+                success: function(data){
+                   $('#property_sel_next').append(data)
+
+            }
+        });
+
+        $.ajax({
+            url:"admin?viewid=A020&part=addidsnext&ids="+ids+"&idsn="+idsn+"&pik="+pk,
+            async:false,
+            success: function(data){
+                $('#kuaidi').append(data)
+            }
+        });
+
+    }else if (property_sel1!=''){
+
+        var ids=property_sel1
+        $('#kuaidi').html('');
+        $.ajax({
+            url:"admin?viewid=A020&part=addids&ids="+ids+"&pk="+pk,
+            async:false,
+            success: function(data){
+
+                $('#kuaidi').append(data)
+            }
+        });
+        $('#property_sel_next').html('');
+        $.ajax({
+                url:"admin?viewid=A020&part=addsel&ids="+ids,
+                async:false,
+                success: function(data){
+                   $('#property_sel_next').append(data)
+
+            }
+        });
+
+    }else{
+        $('#kuaidi').html('');
+        $('#property_sel2').html('');
+    }
+
+})
+
+function property_sel(){
+    $('#property_sel_next').html('');
+    var property_sel1=$("select[name=property_sel1]").val();
+    if (property_sel1!=''){
+        var ids=property_sel1
+        $('#kuaidi').html('');
+
+        $.ajax({
+            url:"admin?viewid=A020&part=addids&ids="+ids,
+            async:false,
+            success: function(data){
+                $('#kuaidi').append(data)
+            }
+        });
+        $('#property_sel_next').html('');
+        $.ajax({
+                url:"admin?viewid=A020&part=addsel&ids="+ids,
+                async:false,
+                success: function(data){
+                   $('#property_sel_next').append(data)
+            }
+        });
+    }else{
+        $('#kuaidi').html('');
+        $('#property_sel2').html('');
+    }
+}
+
+function property_sel2(){
+    var property_sel1=$("select[name=property_sel1]").val();
+    var property_seln=$("select[name=property_seln]").val();
+    if (property_seln!=''){
+        var ids=property_sel1
+        var idsn=property_seln
+        $('#kuaidi').html('');
+        $.ajax({
+            url:"admin?viewid=A020&part=addidsnext&ids="+ids+"&idsn="+idsn,
+            async:false,
+            success: function(data){
+                $('#kuaidi').append(data)
+            }
+        });
+
+    }else{
+        property_sel()
+    }
+}
+$(document).ready(function(){
+	$("input[name=propertyid]").click(function() {
+
+		var result = new Array();
+        $("input[name=propertyid]:checkbox").each(function() {
+            if ($(this).is(":checked")) {
+                result.push($(this).attr("value"));
+            }
+        });
+
+        if (result.length>0  && result.length<3){
+            $('#kuaidi').html('');
+            var ids=result.join(",")
+            $.ajax({
+                url:"admin?viewid=A020&part=addids&ids="+ids,
+                async:false,
+                success: function(data){
+                   $('#kuaidi').append(data)
+
+                }
+            });
+        }else if(result.length>2){
+            alert('目前最多支持两种规格')
+            $(this).attr("checked",false);
+        }
+	});
+
+	$("input[name=ems]").click(function() {
+		if($(this).is(':checked')){
+			$(this).val(1);
+			$('#ems').css('display','block')
+		}else{
+			$(this).val(0);
+			$('#ems').css('display','none')
+		}
+	});
+
+	$("#feetype").change(function() {
+		if($(this).val()==0){
+			$('.unitName').text('件');
+		}else{
+
+			$('.unitName').text('KG');
+		}
+	});
+
+});
+</script>
+
+<script type="text/javascript">
+
+//下面用于多图片上传预览功能
+
+function setImagePreviews(avalue) {
+
+var docObj = document.getElementById("doc");
+
+var dd = document.getElementById("dd");
+
+dd.innerHTML = "";
+
+var fileList = docObj.files;
+dd.innerHTML += "<input type='hidden' name='num' value=" + fileList.length + "' />";
+
+for (var i = 0; i < fileList.length; i++) {
+
+
+
+dd.innerHTML += "<div style='float:left' > <img id='img" + i + "' /> </div>";
+
+var imgObjPreview = document.getElementById("img"+i);
+
+if (docObj.files && docObj.files[i]) {
+
+//火狐下，直接设img属性
+
+imgObjPreview.style.display = 'block';
+
+imgObjPreview.style.width = '150px';
+
+imgObjPreview.style.height = '180px';
+
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+
+imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);
+
+}
+
+else {
+
+//IE下，使用滤镜
+
+docObj.select();
+
+var imgSrc = document.selection.createRange().text;
+
+alert(imgSrc)
+
+var localImagId = document.getElementById("img" + i);
+
+//必须设置初始大小
+
+localImagId.style.width = "150px";
+
+localImagId.style.height = "180px";
+
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+
+try {
+
+localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+
+localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+
+}
+
+catch (e) {
+
+alert("您上传的图片格式不正确，请重新选择!");
+
+return false;
+
+}
+
+imgObjPreview.style.display = 'none';
+
+document.selection.empty();
+
+}
+
+}
+
+
+
+return true;
+
+}
+
+
+
+</script>
+
+<script type="text/javascript">
+
+//下面用于多图片上传预览功能
+
+function showImagePreviews(avalue) {
+
+var docObj = document.getElementById("docs");
+
+var dd = document.getElementById("dds");
+
+dd.innerHTML = "";
+
+var fileList = docObj.files;
+dd.innerHTML += "<input type='hidden' name='nums' value=" + fileList.length + "' />";
+//console.log(fileList.length)
+
+for (var i = 0; i < fileList.length; i++) {
+
+
+
+dd.innerHTML += "<div style='float:left' > <img id='imgs" + i + "' /> </div>";
+
+var imgObjPreview = document.getElementById("imgs"+i);
+
+if (docObj.files && docObj.files[i]) {
+
+//火狐下，直接设img属性
+
+imgObjPreview.style.display = 'block';
+
+imgObjPreview.style.width = '150px';
+
+imgObjPreview.style.height = '180px';
+
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+
+imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);
+
+}
+
+else {
+
+//IE下，使用滤镜
+
+docObj.select();
+
+var imgSrc = document.selection.createRange().text;
+
+alert(imgSrc)
+
+var localImagId = document.getElementById("imgs" + i);
+
+//必须设置初始大小
+
+localImagId.style.width = "150px";
+
+localImagId.style.height = "180px";
+
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+
+try {
+
+localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+
+localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+
+}
+
+catch (e) {
+
+alert("您上传的图片格式不正确，请重新选择!");
+
+return false;
+
+}
+
+imgObjPreview.style.display = 'none';
+
+document.selection.empty();
+
+}
+
+}
+
+
+
+return true;
+
+}
+
+
+
+</script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}       
+            
+	

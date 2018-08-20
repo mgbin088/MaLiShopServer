@@ -1,0 +1,223 @@
+{% extends "main.html" %}
+
+
+
+{% block topSearch %}
+<table class="table table-bordered tb searchtbl">
+    <tbody>
+        <tr>
+            <th style="font-size:14px;">商品编号:</th>
+            <td width="200">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="qqid" value="{{qqid}}" />
+
+                </div>
+            </td>
+
+            <th style="font-size:14px;">条码编号:</th>
+            <td  width="200">
+
+                <div class="input-group">
+					 <input type="text" class="form-control" name="qqid" value="{{qqid}}" />
+
+
+                </div>
+            </td>
+
+            <th style="font-size:14px;">所属店铺</th>
+            <td width="200">
+                <div class="input-group">
+                    <select name="orderbydir" id="orderbydir" class="form-control" onchange="this.form.pageNo.value=1;this.form.submit();">
+                        <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>全部</option>
+                        <option value="DESC"{{' selected="selected"' if 'DESC' == orderbydir}}>正常</option>
+                        <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>禁用</option>
+
+                    </select>
+
+                </div>
+            </td>
+
+			<th style="font-size:14px;">商品分类:</th>
+            <td width="200">
+                <div class="input-group">
+                    <select name="orderbydir" id="orderbydir" class="form-control" onchange="this.form.pageNo.value=1;this.form.submit();">
+                        <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>全部</option>
+                        <option value="DESC"{{' selected="selected"' if 'DESC' == orderbydir}}>正常</option>
+                        <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>禁用</option>
+
+                    </select>
+
+                </div>
+            </td>
+
+
+
+        </tr>
+
+		<tr>
+
+
+
+            <th style="font-size:14px;">商品名称:</th>
+            <td width="200">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="qqid" value="{{qqid}}" />
+
+                </div>
+            </td>
+
+            <th style="font-size:14px;">商品特色:</th>
+            <td width="200">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="qqid" value="{{qqid}}" />
+
+                </div>
+            </td>
+
+            <th style="font-size:14px;">商品状态:</th>
+            <td width="200">
+                <div class="input-group">
+                    <select name="orderbydir" id="orderbydir" class="form-control" onchange="this.form.pageNo.value=1;this.form.submit();">
+                        <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>全部</option>
+                        <option value="DESC"{{' selected="selected"' if 'DESC' == orderbydir}}>正常</option>
+                        <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>禁用</option>
+
+                    </select>
+
+                </div>
+            </td>
+
+            <th style="font-size:14px;">是否推荐:</th>
+            <td width="200">
+                <div class="input-group">
+                    <select name="orderbydir" id="orderbydir" class="form-control" onchange="this.form.pageNo.value=1;this.form.submit();">
+                        <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>全部</option>
+                        <option value="DESC"{{' selected="selected"' if 'DESC' == orderbydir}}>正常</option>
+                        <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>禁用</option>
+
+                    </select>
+
+                </div>
+            </td>
+
+
+
+
+        <tr>
+
+
+
+            <td colspan="11">
+                {% if lR[0] != '1' %}
+                 <button class="btn btn-info btn-sm" type="button" onclick="main_search()"><i class="fa fa-search"></i> 搜索</button>
+                <button type="button" class="btn btn-success btn-sm" onclick="main_add()"><i class="fa fa-plus"></i> 增加</button>
+
+
+                {% endif %}
+            </td>
+
+        </tr>
+
+        </tr>
+
+    </tbody>
+</table>
+{% endblock %}
+
+
+{% block mGrid %}
+
+	<table class="table table-bordered"><!--这里要加基类-->
+
+		<thead>
+
+			<tr style="background-color:#e5e5e5" bgcolor="#ffffff">
+
+				{%for n in NL[1:]%}
+				<th style="text-align:{{n[3]}};width:{{n[2]}};">{{n}}</th>
+				{%endfor%}
+				<th style="text-align:center">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			{% for row in dataList %}
+				<tr bgcolor="#ffffff">
+
+					{% set i = 1 %}
+					{% for e in row %}
+					{% if loop.index == 5%}
+					<td style="text-align:{{NL[i][3]}};"><img style="width:50px;height:50px" src="{{e}}"/></td>
+					{% else%}
+					<td style="text-align:{{NL[i][3]}};">{{e}}</td>
+					{%endif%}
+
+					{% set i=i+1 %}
+					{% endfor %}
+					<td style="text-align:center;">
+						{% if lR[1] == '' %}
+						<a class="btn btn-xs btn-info" onclick="main_update({{row[0]}})" title="编辑"><i class="fa fa-edit"></i></a>
+						{% endif %}
+						{% if lR[2] == '' %}
+						<a class="btn btn-xs btn-warning" onclick="main_delete({{row[0]}});" title="删除"><i class="fa fa-trash-o"></i></a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table><!---->
+{% endblock %}
+        
+	
+{% block page_script %}
+<script>
+$(function(){
+	$("input[name=pk]").val('');
+	$("input[name=part]").val('main');
+});
+</script>
+
+<script>
+function main_post(action){
+	if($("input[name=item_id]:checked").length == 0){
+		layer.alert("请选择商品");
+		return false;
+	}
+	$("input[name=action]").val(action);
+	$("input[name=part]").val('post');                
+	$("form[name=frmMain]")[0].submit();      
+}
+$(function(){
+	$("select[name=set_ctype]").change(function(){
+		var v = $(this).val();
+		if(v != ''){
+			if($("input[name=item_id]:checked").length == 0){
+				layer.alert("请选择商品");
+				$(this).val('');
+				return false;
+			}
+			$("input[name=action]").val('setCtype');
+			$("input[name=part]").val('post');                
+			$("form[name=frmMain]")[0].submit();    
+		}
+	});
+	
+	$("select[name=set_lb]").change(function(){
+		var v = $(this).val();
+		if(v != ''){
+			if($("input[name=item_id]:checked").length == 0){
+				layer.alert("请选择商品");
+				$(this).val('');
+				return false;
+			}
+			$("input[name=action]").val('setLb');
+			$("input[name=part]").val('post');                
+			$("form[name=frmMain]")[0].submit();    
+		}
+	});
+});
+</script>
+{% endblock %}
+        
+            
+	

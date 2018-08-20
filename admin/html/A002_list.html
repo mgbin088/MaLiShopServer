@@ -1,0 +1,174 @@
+{% extends "main.html" %}
+
+
+{% block topSearch %}
+
+{% endblock %}
+{% block mGrid %}
+<table class="table table-bordered">
+
+
+    <tbody>
+        <tr>
+            <th colspan="6">
+                <div>店铺设置</div>
+            </th>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+            <td width="100">
+                <label>搜索关键词:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="s_keywords" value="{{item.s_keywords}}" readonly="readonly" />
+            </td>
+
+
+        </tr>
+        <tr>
+            <td width="100">
+                <label>订单关闭时间:</label>
+            </td>
+            <td >
+                <input type="text" class="form-control"  name="num_time" value="{{item.num_time}}" readonly="readonly" />
+                分钟
+            </td>
+
+        </tr>
+
+        <tr>
+            <td rowspan="2" width="100">
+                <label>满包邮：</label>
+            </td>
+            <td width="250">
+                <span style="font-size:18px;color:red;">满</span>
+                <input type="text" class="form-control"  name="money" value="{{item.money}}" readonly="readonly" />
+                <span style="font-size:18px;color:red;">钱包邮</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="250">
+                <span style="font-size:18px;color:red;">满</span>
+                <input type="text" class="form-control"  name="amount" value="{{item.amount}}" readonly="readonly" />
+                <span style="font-size:18px;color:red;">件包邮</span>
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td width="100">
+                <label>购物车关键词:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="b_keywords" value="{{item.b_keywords}}" readonly="readonly" />
+            </td>
+
+
+        </tr>
+
+        <!--tr>
+            <td width="100">
+                <label for="">微信支付商户秘钥:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="mchkey" value="{{item.mchkey}}" readonly="readonly" />
+            </td>
+
+
+        </tr-->
+
+        <tr>
+
+
+                <td colspan="2">
+
+                <button type="button" class="btn btn-success btn-sm" onclick="main_update({{item.usr_id}})"><i class="fa fa-edit"></i>设置</button>
+
+
+            </td>
+
+
+        </tr>
+
+
+
+        <!--tr>
+            <td width="100">
+                <label >支付证书文件:</label>
+            </td>
+            <td width="250">
+                <input type="file" class="form-control"  name="danhao" value="" readonly="readonly" />
+            </td>
+
+
+        </tr>
+
+        <tr>
+            <th colspan="6">
+                <div id="form2">Token信息</div>
+            </th>
+        </tr>
+        <tr>
+            <td width="100">
+                <label for="">accesstoken:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="acctoken" value="{{item.token}}" readonly="readonly" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td width="100">
+                <label for="">jsTicket:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="danhao" value="" readonly="readonly" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td width="100">
+                <label for="">添加时间:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="ctime" value="{{item.create_date}}" readonly="readonly" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td width="100">
+                <label for="">更新时间:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="danhao" value="" readonly="readonly" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td width="100">
+                <label for="">Token刷新时间:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="danhao" value="" readonly="readonly" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button type="button" class="btn btn-success btn-sm" onclick="main1()"><i class="fa fa-plus"></i> 小程序获取二维码</button>
+            </td>
+        </tr-->
+
+    </tbody>
+</table>
+{% endblock %}
+
+

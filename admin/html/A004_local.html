@@ -1,0 +1,226 @@
+{% extends "local.html" %}
+
+
+{% block MUL_BTNS %}
+<table class="tb single-table clearfix top-line">
+    <tr>
+        <td style="text-align:left;">
+
+
+            <input type="submit" class="btn btn-sm btn-info" name="add_save" value="提交"/>
+            <input type="reset" class="btn btn-sm btn-info" name="add_save" value="重置"/>
+
+            {{sUrlBack}}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+
+{% block html_local %}
+<table class="table-list">
+	<tr>
+		<td colspan="6">
+			<div id="form2"></div>
+		</td>
+	</tr>
+	<tr>
+	</tr>
+
+	<tr>
+		<td style="width:100px;">
+			<label for="">名称:</label>
+		</td>
+		<td >
+			<input type="text" class="form-control"  name="name" value="{{item.name}}"  />
+		</td>
+	</tr>
+
+	<tr>
+		<td style="width:100px;">
+			<label for="">是否包邮:</label>
+		</td>
+		<td width="250">
+			<select name="isfree"  class="form-control" >
+				<option value="0"{{' selected="selected"' if item.isfree|string == '0'}}>不包邮</option>
+				<option value="1"{{' selected="selected"' if item.isfree|string == '1'}}>包邮</option>
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="width:100px;">
+			<label for="">计价方式:</label>
+		</td>
+		<td width="250">
+			<select name="feetype"  class="form-control" id="feetype">
+				<option value="0"{{' selected="selected"' if item.feetype|string == '0'}}>按件数</option>
+				<option value="1"{{' selected="selected"' if item.feetype|string == '1'}}>按重量</option>
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="width:100px;">
+			<label for="">运送方式:</label>
+		</td>
+		<td width="250">
+
+		</td>
+	</tr>
+	<tr>
+		<td style="width:100px;">
+			<!--input type="checkbox" class="form-control"  name="danhao" value="{{item.danhao}}" /-->
+		</td>
+		<td width="250">
+			<table class="table-list" name="detail" style="width:1000px;">
+				<tbody>
+					<tr>
+						<td style="width:100px;">
+							<input type="checkbox" class="form-control"  name="kuaidi" value="0" />快递
+						</td>
+						<td style="width:800px;">
+							<div id="kuaidi" class="col-sm-12" style="display:none;">
+								<div class="row">
+									<div class="col-sm-12 ">
+
+										<input type="text" name="kfirstnumber" style="width:80px;" value="{{item.kfirstnumber}}">
+										<font class="unitName">件</font>内
+										<input type="text" name="kfirstamount" style="width:80px;" value="{{item.kfirstamount}}">
+										元，每增加
+										<input type="text" name="kaddnumber" style="width:80px;" value="{{item.kaddnumber}}">
+										<font class="unitName">件</font>，增加运费
+										<input type="text" name="kaddamount" style="width:80px;" value="{{item.kaddamount}}">
+										元
+									</div>
+
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:50px;">
+							<input type="checkbox" class="form-control"  name="ems" value="0" />EMS
+						</td>
+						<td width="100">
+
+							<div id="ems" class="col-sm-12" style="display:none;">
+								<div class="row">
+									<div class="col-sm-12 ">
+
+										<input type="text" name="efirstnumber" style="width:80px;" value="{{item.efirstnumber}}">
+										<font class="unitName">件</font>内
+										<input type="text" name="efirstamount" style="width:80px;" value="{{item.efirstamount}}">
+										元，每增加
+										<input type="text" name="eaddnumber" style="width:80px;" value="{{item.eaddnumber}}">
+										<font class="unitName">件</font>，增加运费
+										<input type="text" name="eaddamount" style="width:80px;" value="{{item.eaddamount}}">
+										元
+									</div>
+
+								</div>
+							</div>
+						</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</td>
+	</tr>
+
+
+</table>
+
+
+{% endblock %}
+
+{% block page_script %}
+
+
+<script>
+$(function(){
+	if($('#feetype').val()=='0'){
+		$('.unitName').text('件');
+	}else{
+		$('.unitName').text('KG');
+	}
+
+	if ({{item.kuaidi or 0}}==1){
+		$('input[name=kuaidi]').attr("checked",true)
+		$('input[name=kuaidi]').val(1)
+		$('#kuaidi').css('display','block')
+	}
+
+	if ({{item.ems or 0}}==1){
+		$('input[name=ems]').attr("checked",true)
+		$('input[name=ems]').val(1)
+		$('#ems').css('display','block')
+	}
+
+})
+
+$(document).ready(function(){
+	$("input[name=kuaidi]").click(function() {
+		if($(this).is(':checked')){
+			$(this).val(1);
+			$('#kuaidi').css('display','block')
+		}else{
+			$(this).val(0);
+			$('#kuaidi').css('display','none')
+		}
+	});
+
+	$("input[name=ems]").click(function() {
+		if($(this).is(':checked')){
+			$(this).val(1);
+			$('#ems').css('display','block')
+		}else{
+			$(this).val(0);
+			$('#ems').css('display','none')
+		}
+	});
+
+	$("#feetype").change(function() {
+		if($(this).val()==0){
+			$('.unitName').text('件');
+		}else{
+
+			$('.unitName').text('KG');
+		}
+	});
+
+});
+
+function setdaytime(obj){return WdatePicker({dateFmt:'yyyy-MM-dd'});}
+function formcheck_2(form){
+
+	var sp_bh = $('input[name=sp_bh]').val();
+	var num = $('input[name=num]').val();
+	var money = $("input[name=money]").val();
+	var in_date = $("input[name=in_date]").val();
+
+	if(sp_bh == ''){
+		layer.alert("请选择商品");
+		return false;
+	}
+	if(num == ''){
+		layer.alert("请输入数量");
+		return false;
+	}
+	if(money == ''){
+		layer.alert("请输入进货价格");
+		return false;
+	}
+	if(in_date == ''){
+		layer.alert("请输入进货日期");
+		return false;
+	}
+
+	return true;
+	
+}
+</script>
+
+{% endblock %}
+	

@@ -1,0 +1,94 @@
+{% extends "main.html" %}
+
+
+{% block topSearch %}
+<!--table class="table table-bordered tb searchtbl">
+    <tbody>
+        <tr>
+            <th style="font-size:14px;">关键字</th>
+            <td width="230">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="qqid" value="{{qqid}}" />
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="main_search()"><i class="fa fa-search"></i> 搜索</button>
+                    </span>
+                </div>
+            </td>
+
+            <td style="text-align:right" width="">
+                <select name="orderbydir" id="orderbydir" class="form-control" onchange="this.form.pageNo.value=1;this.form.submit();">
+                    <option value="ASC"{{' selected="selected"' if 'ASC' == orderbydir}}>顺序</option>
+                    <option value="DESC"{{' selected="selected"' if 'DESC' == orderbydir}}>逆序</option>
+                </select>
+                <select style="margin-right:15px;" onchange="this.form.pageNo.value=1;this.form.submit();" class="form-control" name="orderby">
+                    {%for od in orderbylist%}
+                        <option value="{{od[0]}}"{{' selected="selected"' if '%s'%od[0] == orderby}}>{{od[1]}}</option>
+                    {%endfor%}
+                </select>
+            </td>
+        </tr>
+        <tr class="search-submit">
+            <td colspan="3">
+                {% if lR[0] != '1' %}
+                <button type="button" class="btn btn-success btn-sm" onclick="main_add()"><i class="fa fa-plus"></i> 增加</button>
+                {% endif %}
+            </td>
+         </tr>
+    </tbody>
+</table-->
+{% endblock %}
+{% block mGrid %}
+<table class="table table-bordered">
+
+
+    <tbody>
+        <tr>
+            <th colspan="6">
+                <div >个性域名信息</div>
+            </th>
+        </tr>
+        <tr>
+        </tr>
+
+        <tr>
+            <td width="100">
+                <label >个性域名:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="synurl" value="{{item.synurl}}"  readonly="readonly" /></br>
+                <font style="color:red;">请填写API工厂后台首页——基本信息——个性域名</font>
+            </td>
+
+        </tr>
+
+
+
+        <tr>
+            <td colspan="2">
+                <button type="button" class="btn btn-success btn-sm" onclick="main_update({{item.usr_id}})"><i class="fa fa-edit"></i>设置</button>
+            </td>
+             <td colspan="2">
+                <button type="button" class="btn btn-success btn-sm" onclick="sync_data({{item.usr_id}})"><i class="fa fa-edit"></i>同步数据</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+{% block page_script %}
+<script>
+    function sync_data(id){
+
+
+        $.ajax({
+            url:"admin?viewid=A005&part=sync_data&id="+id,
+            async:false,
+            success: function(res){
+                layer.alert(res.MSG)
+                //console.log(res)
+            }
+        });
+
+    }
+</script>
+{% endblock %}
+

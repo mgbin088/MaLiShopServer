@@ -1,0 +1,240 @@
+{% extends "local.html" %}
+
+
+{% block MUL_BTNS %}
+<table class="tb single-table clearfix top-line">
+    <tr>
+        <td style="text-align:left;">
+
+
+            <input type="submit" class="btn btn-sm btn-info" name="add_save" value="提交"/>
+            <input type="reset" class="btn btn-sm btn-info" name="add_save" value="重置"/>
+
+            {{sUrlBack}}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block html_local %}
+<table class="table-list">
+	<tr>
+		<td colspan="6">
+			<div id="form2"></div>
+		</td>
+	</tr>
+	<tr>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">名称:</label>
+		</td>
+		<td >
+			<input type="text" class="form-control"  name="name" value="{{item.name}}"  />
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">类型:</label>
+		</td>
+		<td width="250">
+			<input type="text" class="form-control"  name="type" value="{{item.type}}"  />
+			<span>自定义类型，32个字符以内</span>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">上级分类:</label>
+		</td>
+		<td width="250">
+			{{fllist}}
+
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">编号:</label>
+		</td>
+		<td width="250">
+			<input type="text" class="form-control"  name="key" value="{{item.key}}" />
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">图标:</label>
+		</td>
+		<td width="250">
+			<!--input type="hidden" class="form-control"  name="icon" value="{{item.icon}}" />
+			<input type="file" class="form-control"  name="icon"  /-->
+			<div class="col-sm-9 form-control-static">
+                        {% if item.icon %}
+                        <input type="hidden" id="picUrl" name="icon" value="{{item.icon}}">
+                        {%else%}
+                        <input type="hidden" id="picUrl" name="icon" value="">
+                        {%endif%}
+                      <div id="container" style="position: relative;">
+                        <a id="pickfiles" href="javascript:;" style="position: relative; z-index: 1;">[选择本地文件]</a>
+                      <div id="html5_1cihnfb877tb6471h8vbft15163_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 1px; left: 0px; width: 87px; height: 17px; overflow: hidden; z-index: 0;"><input id="html5_1cihnfb877tb6471h8vbft15163" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept="image/jpeg,.jpg,image/gif,.gif,image/png,.png,image/bmp,.bmp,.jpeg"></div></div>
+                      <div id="uploadFiles">
+                           {% if item.icon %}
+                            <img src="{{item.icon}}" style="max-width:100px;">
+						  	<a href="javascript:" onclick="deletePic(this)">[删除]</a>
+                            {%endif%}
+                      </div>
+                      <pre id="console" class="col-xs-10 col-sm-5" style="display:none;"></pre>
+                      <div id="filelist" class="col-xs-10 col-sm-5 hidden"></div>
+                    </div>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label >是否启用</label>
+		</td>
+		<td width="250">
+
+			<select name="isuse"  class="form-control">
+				<option value="0"{{' selected="selected"' if item.isuse|string == '0'}}>启用</option>
+				<option value="1"{{' selected="selected"' if item.isuse|string == '1'}}>停用</option>
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label >排序</label>
+		</td>
+		<td width="250">
+
+			<input type="text" class="form-control"  name="paixu" value="{{item.paixu or 0}}" />
+		</td>
+	</tr>
+
+
+
+
+
+	<!--select name="pid"  class="form-control">
+				{% for d in fllist %}
+				<option value="{{d[0]}}"{{d[2]}}>{{d[1]}}</option>
+				{% endfor %}
+				<option value="0"{{' selected="selected"' if item.status|string == '0'}}>启用</option>
+				<option value="1"{{' selected="selected"' if item.status|string == '1'}}>停用</option>
+			</select-->
+
+<!--
+	<tr>
+		<td>
+			<label for="">选择部门</label>
+		</td>
+		<td>
+			<select name="dept_id" class="form-control">
+				{% for d in deptlist %}
+				<option value="{{d[0]}}"{{d[2]}}>{{d[1]}}</option>
+				{% endfor %}
+			</select>
+		</td>
+	</tr>
+-->
+	
+</table>
+
+
+{% endblock %}
+
+{% block page_script %}
+
+<script src="static/plupload-3.1.2/js/plupload.full.min.js"></script>
+<script>
+var uploader = new plupload.Uploader({
+      runtimes : 'html5,flash,silverlight,html4',
+      browse_button : 'pickfiles', // you can pass an id...
+      container: document.getElementById('container'), // ... or DOM Element itself
+      url : '/admin?viewid=A017&part=upload',
+      flash_swf_url : '/static/plupload-3.1.2/js/Moxie.swf',
+      silverlight_xap_url : '/static/plupload-3.1.2/js/Moxie.xap',
+
+      filters : {
+        max_file_size : '10mb',
+        mime_types: [
+          {title : "Image files", extensions : "jpg,gif,png,bmp,jpeg"}
+        ]
+      },
+
+      init: {
+        PostInit: function() {
+          document.getElementById('filelist').innerHTML = '';
+        },
+
+        FilesAdded: function(up, files) {
+          plupload.each(files, function(file) {
+            document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+          });
+          uploader.start();
+        },
+
+        UploadProgress: function(up, file) {
+          document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+        },
+
+        FileUploaded: function(up, file, info) {
+          // Called when file has finished uploading
+          var response = info.response;
+          var response_ = JSON.parse(response);
+          $("#picUrl").val(response_.url);
+          $("#uploadFiles").html('<img src="'+ response_.url +'" style="max-width:100px;"><a href="javascript:" onclick="deletePic(this)">[删除]</a>');
+        },
+
+        Error: function(up, err) {
+          document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+        }
+      }
+    });
+
+    uploader.init();
+    //required email url date dateISO number digits creditcard minlength maxlength rangelength
+    //min max range step equalTo remote
+    function deletePic (aObj) {
+    		$('#picUrl').val('');
+    		$("#uploadFiles").html('');
+		  //$(aObj).parents("#uploadFiles").remove();
+		}
+
+
+function setdaytime(obj){return WdatePicker({dateFmt:'yyyy-MM-dd'});}
+function formcheck_2(form){
+
+	var sp_bh = $('input[name=sp_bh]').val();
+	var num = $('input[name=num]').val();
+	var money = $("input[name=money]").val();
+	var in_date = $("input[name=in_date]").val();
+
+	if(sp_bh == ''){
+		layer.alert("请选择商品");
+		return false;
+	}
+	if(num == ''){
+		layer.alert("请输入数量");
+		return false;
+	}
+	if(money == ''){
+		layer.alert("请输入进货价格");
+		return false;
+	}
+	if(in_date == ''){
+		layer.alert("请输入进货日期");
+		return false;
+	}
+
+	return true;
+	
+}
+</script>
+
+{% endblock %}
+	

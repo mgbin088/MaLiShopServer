@@ -1,0 +1,343 @@
+{% extends "local.html" %}
+
+{% block MUL_BTNS %}
+<table class="tb single-table clearfix top-line">
+    <tr>
+        <td style="text-align:left;">
+
+
+            <input type="submit" class="btn btn-sm btn-info" name="add_save" value="提交"/>
+            <input type="reset" class="btn btn-sm btn-info" name="add_save" value="重置"/>
+
+            {{sUrlBack}}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block html_local %}
+        <table class="tb single-table">
+
+            <tr>
+                <td colspan="6">
+                    <div id="form2"></div>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+
+            <tr>
+                <td colspan="4">
+                    <label style="color:red;"></label>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >类型标记</label>
+                </td>
+                <td width="350">
+                    <input type="text" class="form-control"  name="type"  value="{{item.type}}" />
+                    <span style="color:red;">自定义，便于扩展</span>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >业务编号</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="businessid"  value="{{item.businessid}}" />
+                    <span style="color:red;">请填写业务数字ID编码</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >名称</label>
+                </td>
+                <td width="250">
+
+                    <input type="text" class="form-control"  name="title" value="{{item.title}}" />
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >Banner图片</label>
+                </td>
+                <td colspan="3">
+
+                    <!--div style="margin :0px auto; width:990px;">
+                        <input type="hidden" class="form-control"  name="pic" value="{{item.pic}}" />
+                        <input type="file" name="pic" id="doc"  style="width:150px;" onchange="javascript:setImagePreviews();" accept="image/*" />
+
+                        <div id="dd" style=" width:990px;">
+                            {% if item.pic%}
+                            <input type="hidden" name="num" value="1'">
+                            <div style="float:left">
+                                <img id="img0" src="static/data/{{item.pic}}" style="display: block; width: 150px; height: 180px;">
+                            </div>
+                            {%endif%}
+                        </div>
+
+                    </div-->
+                    <div class="col-sm-9 form-control-static">
+                        {% if item.pic %}
+                        <input type="hidden" id="picUrl" name="picUrl" value="{{item.pic}}">
+                        {%else%}
+                        <input type="hidden" id="picUrl" name="picUrl" value="">
+                        {%endif%}
+                      <div id="container" style="position: relative;">
+                        <a id="pickfiles" href="javascript:;" style="position: relative; z-index: 1;">[选择本地文件]</a>
+                      <div id="html5_1cihnfb877tb6471h8vbft15163_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 1px; left: 0px; width: 87px; height: 17px; overflow: hidden; z-index: 0;"><input id="html5_1cihnfb877tb6471h8vbft15163" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept="image/jpeg,.jpg,image/gif,.gif,image/png,.png,image/bmp,.bmp,.jpeg"></div></div>
+                      <div id="uploadFiles">
+                           {% if item.pic %}
+                            <img src="{{item.pic}}" style="max-width:100px;">
+                            <a href="javascript:" onclick="deletePic(this)">[删除]</a>
+                            {%endif%}
+                      </div>
+                      <pre id="console" class="col-xs-10 col-sm-5" style="display:none;"></pre>
+                      <div id="filelist" class="col-xs-10 col-sm-5 hidden"></div>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >链接地址</label>
+                </td>
+                <td colspan="3">
+
+                    <input type="text" class="form-control"  name="linkurl" value="{{item.linkurl}}" />
+                </td>
+            </tr>
+
+             <tr>
+                <td width="100">
+                    <label >状态</label>
+                </td>
+                <td width="250">
+
+                    <select name="status"  class="form-control">
+						<option value="0"{{' selected="selected"' if item.status|string == '0'}}>显示</option>
+						<option value="1"{{' selected="selected"' if item.status|string == '1'}}>隐藏</option>
+					</select>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >排序</label>
+                </td>
+                <td width="250">
+
+                    <input type="text" class="form-control"  name="paixu" value="{{item.paixu}}" />
+                    <span style="color:red;">数字越小越排在前面</span>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td width="100">
+                    <label >备注</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="remark" value="{{item.remark}}"/>
+                </td>
+            </tr>
+            <!--tr>
+                <td colspan="4">
+
+                    <input type="submit" class="btn btn-sm btn-info" name="add_save" value="提交"/>
+                    <input type="reset" class="btn btn-sm btn-info" name="add_save" value="重置"/>
+                </td>
+            </tr-->
+        </table>
+{% endblock %}
+
+
+{% block page_script %}
+
+
+<SCRIPT language="Javascript" src="static/js/My97DatePicker/WdatePicker.js"></SCRIPT>
+<script src="static/plupload-3.1.2/js/plupload.full.min.js"></script>
+<script>
+
+
+    var uploader = new plupload.Uploader({
+      runtimes : 'html5,flash,silverlight,html4',
+      browse_button : 'pickfiles', // you can pass an id...
+      container: document.getElementById('container'), // ... or DOM Element itself
+      url : '/admin?viewid=A010&part=upload',
+      flash_swf_url : '/static/plupload-3.1.2/js/Moxie.swf',
+      silverlight_xap_url : '/static/plupload-3.1.2/js/Moxie.xap',
+
+      filters : {
+        max_file_size : '10mb',
+        mime_types: [
+          {title : "Image files", extensions : "jpg,gif,png,bmp,jpeg"}
+        ]
+      },
+
+      init: {
+        PostInit: function() {
+          document.getElementById('filelist').innerHTML = '';
+        },
+
+        FilesAdded: function(up, files) {
+          plupload.each(files, function(file) {
+            document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+          });
+          uploader.start();
+        },
+
+        UploadProgress: function(up, file) {
+          document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+        },
+
+        FileUploaded: function(up, file, info) {
+          // Called when file has finished uploading
+          var response = info.response;
+          var response_ = JSON.parse(response);
+          $("#picUrl").val(response_.url);
+          $("#uploadFiles").html('<img src="'+ response_.url +'" style="max-width:100px;"><a href="javascript:" onclick="deletePic(this)">[删除]</a>');
+        },
+
+        Error: function(up, err) {
+          document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+        }
+      }
+    });
+
+    uploader.init();
+    //required email url date dateISO number digits creditcard minlength maxlength rangelength
+    //min max range step equalTo remote
+    function deletePic (aObj) {
+    		$('#picUrl').val('');
+    		$("#uploadFiles").html('');
+		  //$(aObj).parents("#uploadFiles").remove();
+		}
+
+function setdaytime(obj){return WdatePicker({dateFmt:'yyyy-MM-dd'});}
+
+function formcheck_2(form){
+
+	var title = $('input[name=title]').val(); 
+	
+	if(title == ''){
+		layer.alert("请输入首页名称");
+		return false;
+	}
+	return true
+}
+/*
+$(document).on('ready', function() {
+    $("#input-b1").fileinput({
+        showUpload: false,
+        dropZoneEnabled: false,
+        maxFileCount: 10,
+        mainClass: "input-group-sg"
+    });
+});*/
+
+</script>
+<script type="text/javascript">
+
+//下面用于多图片上传预览功能
+
+function setImagePreviews(avalue) {
+
+var docObj = document.getElementById("doc");
+
+var dd = document.getElementById("dd");
+
+dd.innerHTML = "";
+
+var fileList = docObj.files;
+dd.innerHTML += "<input type='hidden' name='num' value=" + fileList.length + "' />";
+console.log(fileList.length)
+
+for (var i = 0; i < fileList.length; i++) {
+
+
+
+dd.innerHTML += "<div style='float:left' > <img id='img" + i + "' /> </div>";
+
+var imgObjPreview = document.getElementById("img"+i);
+
+if (docObj.files && docObj.files[i]) {
+
+//火狐下，直接设img属性
+
+imgObjPreview.style.display = 'block';
+
+imgObjPreview.style.width = '150px';
+
+imgObjPreview.style.height = '180px';
+
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+
+imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);
+
+}
+
+else {
+
+//IE下，使用滤镜
+
+docObj.select();
+
+var imgSrc = document.selection.createRange().text;
+
+alert(imgSrc)
+
+var localImagId = document.getElementById("img" + i);
+
+//必须设置初始大小
+
+localImagId.style.width = "150px";
+
+localImagId.style.height = "180px";
+
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+
+try {
+
+localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+
+localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+
+}
+
+catch (e) {
+
+alert("您上传的图片格式不正确，请重新选择!");
+
+return false;
+
+}
+
+imgObjPreview.style.display = 'none';
+
+document.selection.empty();
+
+}
+
+}
+
+
+
+return true;
+
+}
+
+
+
+</script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}       
+            
+	

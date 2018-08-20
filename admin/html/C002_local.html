@@ -1,0 +1,865 @@
+{% extends "local.html" %}
+
+
+{% block MUL_BTNS %}
+<table class="tb single-table clearfix top-line">
+    <tr>
+        <td style="text-align:left;">
+            <input type="submit" class="btn btn-sm btn-info" name="add_save" value="提交"/>
+            <input type="reset" class="btn btn-sm btn-info" name="add_save" value="重置"/>
+            {{sUrlBack}}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block table_list %}
+<div class="table-list" style="min-height:1600px;">
+{% endblock%}
+{% block html_local %}
+    <table class="tb single-table">
+            <tr>
+                <td colspan="6">
+                    <div id="form2"></div>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <label style="color:red;"></label>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >所属店铺：</label>
+                </td>
+                <td width="250">
+                    <select class="form-control" name="shopid">
+                        {% for dl in shoplist %}
+                        <option value="{{dl[0]}}"{{' selected="selected"' if item.categoryid|string == '%s'%dl[0] }}>{{dl[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+             <tr>
+                <td width="100">
+                    <label >商品分类：</label>
+                </td>
+                <td width="250">
+                    <select class="form-control" name="categoryid">
+                        {% for dl in goodlist %}
+                        <option value="{{dl[0]}}"{{' selected="selected"' if item.categoryid|string == '%s'%dl[0] }}>{{dl[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+             </tr>
+            <tr>
+                <td width="100">
+                    <label >条码编号：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="barcode" value="{{item.barcode}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >视频编号：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="videoid" value="{{item.videoid}}" />
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >商品名称：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="name" value="{{item.name}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >商品特色：</label>
+                </td>
+                <td width="250">
+                    <textarea  class="form-control"  name="characteristic" >{{item.characteristic}}</textarea>
+                </td>
+            </tr>
+
+             <tr>
+                <td width="100">
+                    <label >选择物流模板：</label>
+                </td>
+                <td width="250">
+                    <select class="form-control" name="logisticsid">
+                        {% for dl in logistics %}
+                        <option value="{{dl[0]}}"{{' selected="selected"' if item.categoryid|string == '%s'%dl[0] }}>{{dl[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+             </tr>
+
+            <tr>
+                <td width="100">
+                    <label >排序：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="paixu" value="{{item.paixu or 0}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >是否推荐：</label>
+                </td>
+                <td width="250">
+
+                     <select name="recommendstatus"  class="form-control">
+						<option value="0"{{' selected="selected"' if item.recommendstatus|string == '0'}}>不推荐</option>
+						<option value="1"{{' selected="selected"' if item.recommendstatus|string == '1'}}>推荐</option>
+					</select>
+                </td>
+             </tr>
+            <tr>
+                <td width="100">
+                    <label >商品状态：</label>
+                </td>
+                <td width="250">
+
+                     <select name="status"  class="form-control">
+						<option value="0"{{' selected="selected"' if item.status|string == '0'}}>上架</option>
+						<option value="1"{{' selected="selected"' if item.status|string == '1'}}>下架</option>
+					</select>
+                </td>
+            </tr>
+
+            <!--tr>
+                <td width="100">
+                    <label >封面展示图片：</label>
+                </td>
+                <td width="250">
+                    <div style="margin :0px auto; width:990px;">
+
+                        <input type="file" name="pic" id="doc"  style="width:150px;" onchange="javascript:setImagePreviews();" accept="image/*" />
+                        <div id="dd" style=" width:990px;">
+                            {% if item.pic%}
+                            <div style="float:left">
+                                <img id="img0" src="static/data/{{item.pic}}" style="display: block; width: 150px; height: 180px;">
+                            </div>
+                            {%endif%}
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >明细展示图片：</label>
+                </td>
+                <td width="250">
+                    <div style="margin :0px auto; width:990px;">
+                        {% if pics!=[]%}
+                            {% for p in pics %}
+                            <input type="hidden" class="form-control"  name="pics" value="{{p}}" />
+                            {%endfor%}
+                        {% endif %}
+                        <input type="file" name="pics" id="docs"  style="width:150px;" multiple="multiple" onchange="javascript:showImagePreviews();" accept="image/*" />
+                        <div id="dds" style=" width:990px;">
+                            {% if pics!=[]%}
+
+                            {% for p in pics %}
+                                <div style="float:left">
+                                    <img id="imgs0" src="static/data/{{p}}" style="display: block; width: 150px; height: 180px;">
+                                </div>
+                            {%endfor%}
+                            {%endif%}
+                        </div>
+                    </div>
+                </td>
+            </tr-->
+            <tr >
+                <td width="100">
+                    <label >商品图片：</label>
+                </td>
+                <td width="250">
+                    <div  style="margin :0px auto; width:990px;">
+                      <div id="container" style="position: relative;">
+                          <a id="pickfiles" href="javascript:;" style="position: relative; z-index: 1;">[选择本地文件]</a>
+                          <span class="orange">第一张图片默认为商品封面图片，可拖动排序</span>
+                          <div id="html5_1cij5unjenath3t5qk16hn16op3_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 1px; left: 0px; width: 87px; height: 17px; overflow: hidden; z-index: 0;">
+                            <input id="html5_1cij5unjenath3t5qk16hn16op3" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept="image/jpeg,.jpg,image/gif,.gif,image/png,.png,image/bmp,.bmp,.jpeg">
+                          </div>
+                      </div>
+                      <div id="uploadFiles" class="row ui-sortable">
+
+                          {% if item.pic%}
+                          <div class="picsDiv col-sm-3">
+                              <input type="hidden" name="pics" value="{{item.pic}}">
+                              <img src="{{item.pic}}" style="width:250px;height:250px;" class="ui-sortable-handle">
+                              <a href="javascript:" onclick="deletePic(this)">[删除]</a>
+                          </div>
+                          {%endif%}
+
+                          {% if pics!=[]%}
+                          {% for p in pics %}
+                          <div class="picsDiv col-sm-3">
+                              <input type="hidden" name="pics" value="{{p}}">
+                              <img src="{{p}}" style="width:250px;height:250px;" class="ui-sortable-handle">
+                              <a href="javascript:" onclick="deletePic(this)">[删除]</a>
+                          </div>
+                          {%endfor%}
+                          {%endif%}
+                      </div>
+                      <pre id="console" class="col-xs-10 col-sm-5" style="display:none;"></pre>
+                      <div id="filelist" class="col-xs-10 col-sm-5 hidden"></div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >详细介绍：</label>
+                </td>
+                <td width="250" colspan="3">
+                    <div class="ibox-content no-padding">
+                        <textarea name="text_contents" class="summernote" id="contents" title="Contents">{{item.content}}</textarea>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >原价：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="originalprice" value="{{item.originalprice or 0}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >会员价：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="hyprice" value="{{item.hyprice or 0}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >现价：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="minprice" value="{{item.minprice or 0}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >拼团价：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="ptprice" value="{{item.ptprice or 0}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >库存数：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="stores" value="{{item.stores or 0}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >订单数：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="numberorders" value="{{item.numberorders or 0}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >商品重量：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="weight" value="{{item.weight or 0}}"/>&nbsp;KG
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >分享送积分奖励：</label>
+                </td>
+                <td width="250">
+                   <select name="commissiontype"  class="form-control">
+						<option value="0"{{' selected="selected"' if item.commissiontype|string == '0'}}>关闭</option>
+						<option value="1"{{' selected="selected"' if item.commissiontype|string == '1'}}>开启</option>
+					</select>
+                    <input type="text" class="form-control"  name="commission" value="{{item.commission or 0}}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >拼团功能：</label>
+                </td>
+                <td width="250">
+                    <select name="pt"  class="form-control">
+						<option value="0"{{' selected="selected"' if item.pt|string == '0'}}>关闭</option>
+						<option value="1"{{' selected="selected"' if item.pt|string == '1'}}>开启</option>
+					</select>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >起售时间：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="datestartstr" value="{{item.datestartstr}}" onclick="setdaytime()"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >停售时间：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="dateendstr" value="{{item.dateendstr}}" onclick="setdaytime()"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100">
+                    <label >浏览量：</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="see" value="{{item.see or 0}}"/>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td width="100">
+                    <label >规格与尺寸：</label>
+                </td>
+                <td width="250">
+                    <table class="table-list" name="detail" style="width:1000px;">
+                        <tbody>
+                            <tr>
+                                <td style="width:100px;">
+                                    {{property_sel1}}
+                                </td>
+                                <td style="width:800px;" id="property_sel_next">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div id="kuaidi" class="col-sm-12" style="display:;">
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+    </table>
+
+{% endblock %}
+
+
+{% block page_script %}
+<SCRIPT language="Javascript" src="static/js/My97DatePicker/WdatePicker.js"></SCRIPT>
+<script src="static/plupload-3.1.2/js/plupload.full.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $('.summernote').summernote({
+                lang: 'zh-CN',
+                height: 300
+            });
+
+        });
+        var edit = function () {
+            $("#eg").addClass("no-padding");
+            $('.click2edit').summernote({
+                lang: 'zh-CN',
+                focus: true
+            });
+        };
+        var save = function () {
+            $("#eg").removeClass("no-padding");
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
+    <script>
+		var um ;
+		var propertyPrice = [];
+		$(function(){
+			//um = UE.getEditor('editor');
+			$( "#uploadFiles" ).sortable({
+				handle: "img",
+				stop: function( event, ui ) {
+				}
+			});
+			/*$(".flatpickr").flatpickr({
+				enableTime:true,
+				enableSeconds:true,
+				disableMobile:true
+			});*/
+		});
+		var uploader = new plupload.Uploader({
+			runtimes : 'html5,flash,silverlight,html4',
+			browse_button : 'pickfiles', // you can pass an id...
+			container: document.getElementById('container'), // ... or DOM Element itself
+			url : '/admin?viewid=C002&part=upload',
+            flash_swf_url : '/static/plupload-3.1.2/js/Moxie.swf',
+            silverlight_xap_url : '/static/plupload-3.1.2/js/Moxie.xap',
+
+			filters : {
+				max_file_size : '10mb',
+				mime_types: [
+					{title : "Image files", extensions : "jpg,gif,png,bmp,jpeg"}
+				]
+			},
+
+			init: {
+				PostInit: function() {
+					document.getElementById('filelist').innerHTML = '';
+				},
+
+				FilesAdded: function(up, files) {
+					plupload.each(files, function(file) {
+						document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+					});
+					uploader.start();
+				},
+
+				UploadProgress: function(up, file) {
+					document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+				},
+
+				FileUploaded: function(up, file, info) {
+	            // Called when file has finished uploading
+					var response = info.response;
+					var response_ = JSON.parse(response);
+          //console.log(response_.url);
+					var innerDivHtml = '<div class="picsDiv col-sm-3">';
+		      innerDivHtml += '<input type="hidden" name="pics" value="'+ response_.url +'">';
+		      innerDivHtml += '<img src="'+ response_.url +'" style="width:250px;height:250px;">';
+		      innerDivHtml += '<a href="javascript:" onclick="deletePic(this)">[删除]</a>';
+		      innerDivHtml += '</div>';
+		      $("#uploadFiles").append(innerDivHtml);
+
+	},
+
+				Error: function(up, err) {
+					document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+				}
+			}
+		});
+		uploader.init();
+		function deletePic (aObj) {
+		  $(aObj).parents(".picsDiv").remove();
+		}
+    </script>
+<script>
+function setdaytime(obj){return WdatePicker({dateFmt:'yyyy-MM-dd HH:MM:ss'});}
+function formcheck_2(form){
+            
+	var title = $('input[name=title]').val(); 
+	
+	if(title == ''){
+		layer.alert("请输入首页名称");
+		return false;
+	}
+	return true
+}
+
+
+
+
+$(function(){
+	if($('#feetype').val()=='0'){
+		$('.unitName').text('件');
+	}else{
+		$('.unitName').text('KG');
+	}
+    /*
+    var result = new Array();
+    $("input[name=propertyid]:checkbox").each(function() {
+        if ($(this).is(":checked")) {
+            result.push($(this).attr("value"));
+        }
+    });
+
+
+    if (result.length>0){
+        var ids=result.join(",")
+        var pk=$("input[name=pk]").val()
+        console.log(pk)
+        $.ajax({
+            url:"admin?viewid=C002&part=addids&ids="+ids+"&pk="+pk,
+            async:false,
+            success: function(data){
+               $('#kuaidi').append(data)
+            }
+        });
+    }*/
+    var pk=$("input[name=pk]").val()
+    var property_sel1=$("select[name=property_sel1]").val();
+    var property_seln='{{property_seln}}'
+    if (property_seln!=''){
+        var ids=property_sel1
+        var idsn=property_seln
+
+        $.ajax({
+                url:"admin?viewid=C002&part=addsel&ids="+ids+"&idsn="+idsn,
+                async:false,
+                success: function(data){
+                   $('#property_sel_next').append(data)
+
+            }
+        });
+
+        $.ajax({
+            url:"admin?viewid=C002&part=addidsnext&ids="+ids+"&idsn="+idsn+"&pik="+pk,
+            async:false,
+            success: function(data){
+                $('#kuaidi').append(data)
+            }
+        });
+
+    }else if (property_sel1!=''){
+
+        var ids=property_sel1
+        $('#kuaidi').html('');
+        $.ajax({
+            url:"admin?viewid=C002&part=addids&ids="+ids+"&pk="+pk,
+            async:false,
+            success: function(data){
+
+                $('#kuaidi').append(data)
+            }
+        });
+        $('#property_sel_next').html('');
+        $.ajax({
+                url:"admin?viewid=C002&part=addsel&ids="+ids,
+                async:false,
+                success: function(data){
+                   $('#property_sel_next').append(data)
+
+            }
+        });
+
+    }else{
+        $('#kuaidi').html('');
+        $('#property_sel2').html('');
+    }
+
+})
+
+function property_sel(){
+    $('#property_sel_next').html('');
+    var property_sel1=$("select[name=property_sel1]").val();
+    if (property_sel1!=''){
+        var ids=property_sel1
+        $('#kuaidi').html('');
+
+        $.ajax({
+            url:"admin?viewid=C002&part=addids&ids="+ids,
+            async:false,
+            success: function(data){
+                $('#kuaidi').append(data)
+            }
+        });
+        $('#property_sel_next').html('');
+        $.ajax({
+                url:"admin?viewid=c002&part=addsel&ids="+ids,
+                async:false,
+                success: function(data){
+                   $('#property_sel_next').append(data)
+            }
+        });
+    }else{
+        $('#kuaidi').html('');
+        $('#property_sel2').html('');
+    }
+}
+
+function property_sel2(){
+    var property_sel1=$("select[name=property_sel1]").val();
+    var property_seln=$("select[name=property_seln]").val();
+    if (property_seln!=''){
+        var ids=property_sel1
+        var idsn=property_seln
+        $('#kuaidi').html('');
+        $.ajax({
+            url:"admin?viewid=C002&part=addidsnext&ids="+ids+"&idsn="+idsn,
+            async:false,
+            success: function(data){
+                $('#kuaidi').append(data)
+            }
+        });
+
+    }else{
+        property_sel()
+    }
+}
+$(document).ready(function(){
+	$("input[name=propertyid]").click(function() {
+
+		var result = new Array();
+        $("input[name=propertyid]:checkbox").each(function() {
+            if ($(this).is(":checked")) {
+                result.push($(this).attr("value"));
+            }
+        });
+
+        if (result.length>0  && result.length<3){
+            $('#kuaidi').html('');
+            var ids=result.join(",")
+            $.ajax({
+                url:"admin?viewid=C002&part=addids&ids="+ids,
+                async:false,
+                success: function(data){
+                   $('#kuaidi').append(data)
+
+                }
+            });
+        }else if(result.length>2){
+            alert('目前最多支持两种规格')
+            $(this).attr("checked",false);
+        }
+	});
+
+	$("input[name=ems]").click(function() {
+		if($(this).is(':checked')){
+			$(this).val(1);
+			$('#ems').css('display','block')
+		}else{
+			$(this).val(0);
+			$('#ems').css('display','none')
+		}
+	});
+
+	$("#feetype").change(function() {
+		if($(this).val()==0){
+			$('.unitName').text('件');
+		}else{
+
+			$('.unitName').text('KG');
+		}
+	});
+
+});
+</script>
+
+<script type="text/javascript">
+
+//下面用于多图片上传预览功能
+
+function setImagePreviews(avalue) {
+
+var docObj = document.getElementById("doc");
+
+var dd = document.getElementById("dd");
+
+dd.innerHTML = "";
+
+var fileList = docObj.files;
+dd.innerHTML += "<input type='hidden' name='num' value=" + fileList.length + "' />";
+
+for (var i = 0; i < fileList.length; i++) {
+
+
+
+dd.innerHTML += "<div style='float:left' > <img id='img" + i + "' /> </div>";
+
+var imgObjPreview = document.getElementById("img"+i);
+
+if (docObj.files && docObj.files[i]) {
+
+//火狐下，直接设img属性
+
+imgObjPreview.style.display = 'block';
+
+imgObjPreview.style.width = '150px';
+
+imgObjPreview.style.height = '180px';
+
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+
+imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);
+
+}
+
+else {
+
+//IE下，使用滤镜
+
+docObj.select();
+
+var imgSrc = document.selection.createRange().text;
+
+alert(imgSrc)
+
+var localImagId = document.getElementById("img" + i);
+
+//必须设置初始大小
+
+localImagId.style.width = "150px";
+
+localImagId.style.height = "180px";
+
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+
+try {
+
+localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+
+localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+
+}
+
+catch (e) {
+
+alert("您上传的图片格式不正确，请重新选择!");
+
+return false;
+
+}
+
+imgObjPreview.style.display = 'none';
+
+document.selection.empty();
+
+}
+
+}
+
+
+
+return true;
+
+}
+
+
+
+</script>
+
+<script type="text/javascript">
+
+//下面用于多图片上传预览功能
+
+function showImagePreviews(avalue) {
+
+var docObj = document.getElementById("docs");
+
+var dd = document.getElementById("dds");
+
+dd.innerHTML = "";
+
+var fileList = docObj.files;
+dd.innerHTML += "<input type='hidden' name='nums' value=" + fileList.length + "' />";
+//console.log(fileList.length)
+
+for (var i = 0; i < fileList.length; i++) {
+
+
+
+dd.innerHTML += "<div style='float:left' > <img id='imgs" + i + "' /> </div>";
+
+var imgObjPreview = document.getElementById("imgs"+i);
+
+if (docObj.files && docObj.files[i]) {
+
+//火狐下，直接设img属性
+
+imgObjPreview.style.display = 'block';
+
+imgObjPreview.style.width = '150px';
+
+imgObjPreview.style.height = '180px';
+
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+
+imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);
+
+}
+
+else {
+
+//IE下，使用滤镜
+
+docObj.select();
+
+var imgSrc = document.selection.createRange().text;
+
+alert(imgSrc)
+
+var localImagId = document.getElementById("imgs" + i);
+
+//必须设置初始大小
+
+localImagId.style.width = "150px";
+
+localImagId.style.height = "180px";
+
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+
+try {
+
+localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+
+localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+
+}
+
+catch (e) {
+
+alert("您上传的图片格式不正确，请重新选择!");
+
+return false;
+
+}
+
+imgObjPreview.style.display = 'none';
+
+document.selection.empty();
+
+}
+
+}
+
+
+
+return true;
+
+}
+
+
+
+</script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}       
+            
+	

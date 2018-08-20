@@ -1,0 +1,152 @@
+{% extends "local.html" %}
+
+{% block MUL_BTNS %}
+<table class="tb single-table clearfix top-line">
+    <tr>
+        <td style="text-align:left;">
+
+
+            <input type="submit" class="btn btn-sm btn-info" name="add_save" value="提交"/>
+            <input type="reset" class="btn btn-sm btn-info" name="add_save" value="重置"/>
+
+            {{sUrlBack}}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block html_local %}
+<table class="tb single-table">
+
+            <tr>
+                <td colspan="6">
+                    <div id="form2"></div>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+
+            <tr>
+                <td colspan="4">
+                    <label style="color:red;"></label>
+                </td>
+            </tr>
+            <tr>
+                <td width="100">
+                    <label >商品编号:</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="goodsid"  value="{{item.goodsid}}" />
+                </td>
+			</tr>
+
+			<tr>
+                <td width="100">
+                    <label >总份数:</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="number"  value="{{item.number or 0}}" />
+                </td>
+			</tr>
+
+             <tr>
+                <td width="100">
+                    <label >原价:</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="originalprice"  value="{{item.originalprice or 0}}" />
+                </td>
+			</tr>
+
+			<tr>
+                <td width="100">
+                    <label >底价:</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="minprice"  value="{{item.minprice or 0}}" />
+
+                </td>
+			</tr>
+
+            <tr>
+                <td width="100">
+                    <label >砍价金额:</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="kjprice"  value="{{item.kjprice or 0}}" />
+                    <span style="color:red;">用户帮助砍一刀减多少金额</span>
+                </td>
+			</tr>
+
+            <tr>
+                <td width="100">
+                    <label >状态:</label>
+                </td>
+                <td width="250">
+                    <select name="status"  class="form-control">
+						<option value="0"{{' selected="selected"' if item.status|string == '0'}}>正常</option>
+						<option value="1"{{' selected="selected"' if item.status|string == '1'}}>禁用</option>
+					</select>
+                </td>
+            </tr>
+
+
+
+           <tr>
+                <td width="100">
+                    <label >开始时间:</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="datestart"  value="{{item.datestart}}" onclick="setdaytime()" readonly="readonly"/>
+                </td>
+			</tr>
+
+            <tr>
+                <td width="100">
+                    <label >结束时间:</label>
+                </td>
+                <td width="250">
+                    <input type="text" class="form-control"  name="dateend"  value="{{item.dateend}}" onclick="setdaytime()" readonly="readonly"/>
+                </td>
+			</tr>
+        </table>
+{% endblock %}
+
+{% block page_script %}
+<script>
+$(function(){
+
+})
+
+function setdaytime(obj){return WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});}
+function formcheck_2(form){
+
+	var sp_bh = $('input[name=sp_bh]').val();
+	var num = $('input[name=num]').val();
+	var money = $("input[name=money]").val();
+	var in_date = $("input[name=in_date]").val();
+
+	if(sp_bh == ''){
+		layer.alert("请选择商品");
+		return false;
+	}
+	if(num == ''){
+		layer.alert("请输入数量");
+		return false;
+	}
+	if(money == ''){
+		layer.alert("请输入进货价格");
+		return false;
+	}
+	if(in_date == ''){
+		layer.alert("请输入进货日期");
+		return false;
+	}
+
+	return true;
+	
+}
+</script>
+
+{% endblock %}
+	

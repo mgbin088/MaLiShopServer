@@ -1,0 +1,96 @@
+{% extends "main.html" %}
+
+
+{% block topSearch %}
+
+{% endblock %}
+{% block mGrid %}
+<table class="table table-bordered">
+
+
+    <tbody>
+        <tr>
+            <th colspan="6">
+                <div id="form2">设置信息</div>
+            </th>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+            <td width="100">
+                <label for="">appid:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="appid" value="{{item.appid}}" readonly="readonly" />
+            </td>
+
+
+        </tr>
+        <tr>
+            <td width="100">
+                <label for="">secret:</label>
+            </td>
+            <td >
+                <input type="text" class="form-control"  name="secret" value="{{item.secret}}" readonly="readonly" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td width="100">
+                <label for="">token:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="wxtoken" value="{{item.wxtoken}}" readonly="readonly" />
+                <span style="color:red;">用于接收用户点击、回复、互动及给用户推送消息，没有这方面的需求请留空，不用填写</span>
+            </td>
+
+
+        </tr>
+
+
+
+        <tr>
+            <td width="100">
+                <label for="">mapkey:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="mapkey" value="{{item.mapkey}}" readonly="readonly" />
+            </td>
+
+
+        </tr>
+
+        <tr>
+            <td width="100">
+                <label for="">模板ID:</label>
+            </td>
+            <td width="250">
+                <input type="text" class="form-control"  name="mbid" value="{{item.mbid}}" readonly="readonly" />
+            </td>
+
+
+        </tr>
+
+        <tr>
+
+
+                <td colspan="2">
+
+                <button type="button" class="btn btn-success btn-sm" onclick="main_update({{item.usr_id}})"><i class="fa fa-edit"></i>设置</button>
+
+
+            </td>
+
+
+        </tr>
+
+
+
+
+
+    </tbody>
+</table>
+{% endblock %}
+
+

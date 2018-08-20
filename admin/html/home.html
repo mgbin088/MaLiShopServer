@@ -1,0 +1,45 @@
+{% extends "basic.html" %}
+
+{% block contentpanel %}
+
+	<div class="ibox-title">
+		<span style="margin-left:50px;color:black;font-size:20px;">基本资料</span>
+	</div>
+	<div class="ibox-content">
+
+		<table class="table table-bordered table-striped" style="width:50%;margin-left:50px;">
+			<tbody>
+				<tr>
+					<td style="width:150px;">
+						您的调用ID
+					</td>
+					<td  style="text-align:left;">
+						{{usr_id}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						suburl
+					</td>
+					<td  style="text-align:left;">
+						https://demo.maliapi.cn/api/{{usr_id}}?viewid=home
+					</td>
+				</tr>
+				<tr>
+					<td>
+						payurl
+					</td>
+					<td  style="text-align:left;">
+						https://demo.maliapi.cn/api/{{usr_id}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+
+{% endblock %}
+			
+
+

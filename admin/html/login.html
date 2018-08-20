@@ -1,0 +1,231 @@
+{% include 'header.html' %}
+	<div class="login-top"></div>
+	<div class="login-body">
+		<div class="login-main-div">
+          	<div class="aside-xxx">
+              <div class="xxx-title">码力小程序</div>
+              <div class="xxx-content">开源版 v1.55.682</div>
+              <div class="xxx-text">目前项目开发中，存在诸多不足，详细的开发计划以及更新记录请移步 
+                <a href="https://github.com/eoen/MaLiShop-Server" target="_blank">GitHub</a> 欢迎Star！
+              </div>
+              <div class="xxx-text">
+                后台对应的小程序端源码请移步 
+                <a href="https://github.com/eoen/MaLiShop-MiniApp" target="_blank">MaLiApp</a> 
+              </div>
+              <div class="xxx-text">
+                如果你在使用过程中发现问题，或者有好的开发建议请向我们反馈！QQ交流群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=">644758493</a>
+              </div>
+              <div class="xxx-text">
+                后台技术栈采用Python+PostgreSQL，小程序采用组件化进行开发，目前只有两个人在维护，如果你对我们开源项目感兴趣，并且拥有一技之长，欢迎加入我们！
+                技术合作适宜请联系：totorohost（备注：码力开发）
+              </div>
+          	</div>
+			<div class="aside-xxl">
+              <div class="log-title"><img src="https://cdn.maliapi.cn/image/malilogo.png" /></div>
+			  <form action="" method="POST" target="_top" name="frmMain">
+				  <input type="hidden" name="viewid" value="login" />
+				  <input type="hidden" name="part" value="dologin" />
+				  <input type="text" name="inputname" placeholder="用户名" value="admin" class="cinput login_id" autocomplete="off">
+				  <input type="password" placeholder="密码" name="inputPassword" value="Ad_usr0512" class="cinput inputPassword" autocomplete="off">
+				<button type="submit"  name="login"  id='sbt_save' class="cinput">登&nbsp;&nbsp;录</button>
+				<input type="hidden" name="token" value="952766c5e86" />
+				{% if msg %}
+                <div class="msg">{{msg}}</div>
+				{% endif %}
+			  </form>
+			</div>
+		</div>
+	</div>
+</body>
+<style>
+body {
+	width: 100%;
+	height: 100%;
+  	background: #fcf7fc url(https://cdn.maliapi.cn/image/body-pattern.png) top left repeat;
+}
+.login-body {
+ 	width: 100%;
+ 	height: 100%;
+}
+.login-main-div {
+	width: 680px;
+    height: 500px;
+    margin: 0 auto;
+    padding-top: 12%;
+    position: relative;
+}
+.aside-xxx{
+    position: absolute;
+    right: 330px;
+    width: 350px;
+    height: 460px;
+    background-color: #409EFF;
+    z-index: 99;
+    margin-top: -30px;
+    box-shadow: 2px 2px 15px #409eff85;
+    border-radius: 10px;
+}
+.xxx-title{
+	font-size: 24px;
+    font-weight: lighter;
+    text-align: center;
+    color: #fff;
+    height: 70px;
+    line-height: 100px;
+}
+.xxx-content{
+  	font-size: 14px;
+    text-align: center;
+    color: #fff;
+    font-weight: lighter;
+  	padding-bottom: 10px
+}
+.xxx-text{
+ 	width: 90%;
+    margin: 0 auto;
+    font-size: 15px;
+    line-height: 23px;
+    color: #fff;
+    padding-top: 15px;
+    font-weight: lighter;
+}
+.xxx-text a{
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 4px;
+}
+.aside-xxl{
+	width: 380px;
+    height: 400px;
+    background: #ffffff;
+    padding: 30px 30px 30px 80px;
+    border-radius: 8px;
+    position: absolute;
+    right: 0;
+    box-shadow: 2px 0 10px #DCDFE6;
+}
+.log-title{
+    width: 100%;
+    height: 100px;
+   	margin-bottom: 20px;
+}
+.log-title img{
+  	width: 80px;
+    height: 80px;
+    display: block;
+    margin: 0 auto;
+}
+.aside-xxl .cinput{
+    font-size: 16px;
+    border: 1px solid #E4E7ED;
+    border-radius: 5px;
+    background: #fff;
+    width: 100%;
+    height: 45px;
+    margin-bottom: 25px;
+    padding-left: 10px;
+}
+.aside-xxl .cinput:focus{
+  	outline:none;
+  	border: 1px solid #409EFF;
+}
+#sbt_save{
+  	background:#409EFF;
+  	border:none;
+  	color:#fff;
+}
+.msg{
+    text-align: center;
+    color: #F56C6C;
+}
+.lbtn{background:#4190d3;color:#fff;font-size:16px;border:1px solid #dbd7d6;border-radius:5px;width:100px;height:48px;margin-bottom:20px;padding-left:6px;}
+</style>
+
+
+
+
+
+<script>
+	//获取短信验证码
+	function jcmob(){
+		layer.alert("暂时不需要获取验证码登录");
+		/*
+		var mobile = $('input[name=login_username]').val();
+		
+		if(mobile==""||!mobile.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/))
+		{
+			layer.alert("请输入正确的手机号码");
+			return false;
+		}
+
+		$.ajax({
+			
+        url:"admin",
+        data:{
+            'fid':'login',
+            'part':'sjyz',
+            'mobile':mobile,
+            
+        },
+        dataType:'json',
+        success:function(res){
+			
+            if(res.error == 0){
+                var obj=$(".layui-btn");
+                obj.attr("disabled",true);
+                setTimeout(function(){
+                    obj.attr("disabled",false);
+                },1800000);
+                layer.alert(res.msg);
+                return false;
+            }else{
+                layer.alert(res.msg);
+                return false;
+            }
+        }
+    });
+		*/
+		
+		
+	}  
+	
+	function showOrHideCbtn(obj,type){
+                    if($(obj).val()==""){
+                        $("#cicon"+type).hide();
+                    }else{
+                        $("#cicon"+type).show();
+                    }
+                }
+
+	function check_login(){
+		var username = $("input[name=login_username]").val(); 
+        var sjyz = $("input[name=sjyz]").val();
+		
+		if (username==""||!username.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/))
+                    {
+                        layer.alert("请输入正确的手机号码");
+                        return false;
+                    }
+		if (sjyz.length !=6){
+			layer.alert("请输入正确的验证码");
+            return false;	
+		}
+		$.ajax({
+				url:"admin" ,
+                data:{'fid':'login','part':'dologin_mobile','login_id':username,'password':sjyz},
+                type:"POST",
+                dataType:'json',
+                success:function(res){
+					
+                    if(res.error == 1){	
+						layer.alert(res.msg);
+						return false;
+					}else{
+						window.location.href='admin?fid=home';
+					}
+					//window.location.href='admin?fid=home';
+                 }
+			}); 
+	}
+</script>
+</html>

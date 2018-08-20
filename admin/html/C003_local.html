@@ -1,0 +1,256 @@
+{% extends "local.html" %}
+
+{% block MUL_BTNS %}
+<table class="tb single-table clearfix top-line">
+    <tr>
+        <td style="text-align:left;">
+
+
+            <input type="submit" class="btn btn-sm btn-info" name="add_save" value="提交"/>
+            <input type="reset" class="btn btn-sm btn-info" name="add_save" value="重置"/>
+
+            {{sUrlBack}}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block html_local %}
+<table class="table-list">
+	<tr>
+		<td colspan="6">
+			<div id="form2"></div>
+		</td>
+	</tr>
+	<tr>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label for="">名称:</label>
+		</td>
+		<td >
+			<input type="text" class="form-control"  name="name" value="{{item.name}}" />
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<label >排序</label>
+		</td>
+		<td width="250">
+
+			<input type="text" class="form-control"  name="paixu" value="{{item.paixu}}" />
+		</td>
+	</tr>
+
+	<tr>
+		<td width="100">
+			<div id="form2">&emsp;</div>
+		</td>
+		<td width="250">
+
+
+		</td>
+	</tr>
+	<tr>
+		<td width="100">
+			<div id="form2">&emsp;</div>
+		</td>
+		<td width="250">
+
+
+		</td>
+	</tr>
+	<tr>
+		<td width="100">
+			<div id="form2">&emsp;</div>
+		</td>
+		<td width="250">
+
+
+		</td>
+	</tr>
+
+
+	<tr>
+		<td width="100">
+			<label >子属性设置</label>
+		</td>
+		<td width="250">
+
+			<table class="table-list" name="detail" >
+
+				<thead>
+					<tr>
+						<th width="100">
+							<label for="">名称:</label>
+						</th>
+						<th >
+							<label >备注</label>
+						</th>
+						<th width="100">
+							<label >排序</label>
+						</th>
+						<td>
+							<button type="button" class="btn_none" onclick="add_r('detail')">
+								<img class="addspic" src="static/asset/images/add.png" style="width:22px;height:22px;" />
+							</button>
+
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+
+					{% if itemc==[] %}
+					<tr>
+						<td width="100">
+							<input type="text" class="form-control"  name="cname" value="" />
+
+						</td>
+						<td width="100">
+
+							<input type="text" class="form-control"  name="remark" value="" />
+						</td>
+						<td width="100">
+
+							<input type="text" class="form-control"  name="cpaixu" value="" />
+						</td>
+						<td>
+
+						</td>
+					</tr>
+					{% else %}
+
+					  {% for row in itemc%}
+							<tr>
+								{%for e in row%}
+									{% if loop.index ==1%}
+									<td width="100">
+										<input type="text" class="form-control"  name="cname" value="{{e}}" />
+
+									</td>
+									{% elif loop.index ==2%}
+									<td width="100">
+
+										<input type="text" class="form-control"  name="remark" value="{{e}}" />
+									</td>
+									{% elif loop.index ==3%}
+									<td width="100">
+
+										<input type="text" class="form-control"  name="cpaixu" value="{{e}}" />
+									</td>
+									{%endif%}
+								{%endfor%}
+								{% if loop.index ==1%}
+								<td>
+
+								</td>
+								{%else%}
+									<td>
+										<img onclick="del_r(this)" class="addspic" src="static/asset/images/del.png" style="width:22px;height:22px;"/>
+									</td>
+								{%endif%}
+							</tr>
+					  {%endfor%}
+					{%endif%}
+
+				</tbody>
+			</table>
+		</td>
+	</tr>
+
+
+
+
+
+	
+
+<!--
+	<tr>
+		<td>
+			<label for="">选择部门</label>
+		</td>
+		<td>
+			<select name="dept_id" class="form-control">
+				{% for d in deptlist %}
+				<option value="{{d[0]}}"{{d[2]}}>{{d[1]}}</option>
+				{% endfor %}
+			</select>
+		</td>
+	</tr>
+-->
+	
+</table>
+
+
+{% endblock %}
+
+{% block page_script %}
+
+
+<script>
+$(function(){
+	/*
+    $("select").click(function(){
+        alert("不用选择，自动读取！");
+        return false;
+    });*/
+})
+
+function setdaytime(obj){return WdatePicker({dateFmt:'yyyy-MM-dd'});}
+function formcheck_2(form){
+
+	var sp_bh = $('input[name=sp_bh]').val();
+	var num = $('input[name=num]').val();
+	var money = $("input[name=money]").val();
+	var in_date = $("input[name=in_date]").val();
+
+	if(sp_bh == ''){
+		layer.alert("请选择商品");
+		return false;
+	}
+	if(num == ''){
+		layer.alert("请输入数量");
+		return false;
+	}
+	if(money == ''){
+		layer.alert("请输入进货价格");
+		return false;
+	}
+	if(in_date == ''){
+		layer.alert("请输入进货日期");
+		return false;
+	}
+
+	return true;
+	
+}
+
+
+
+function add_r(){
+
+	var a= "show_option(this,'serlib','cgpm2')";
+	var obj = $("[name=detail]");
+	var tr = obj.find('tbody').find('tr');
+	html="<tr>"
+	html+='<td><input type="text" class="form-control"  name="cname" value="{{item.cname}}" /></td>';
+	html+='<td><input type="text" class="form-control"  name="remark" value="{{item.remark}}" /></td>';
+	html+='<td><input type="text" class="form-control"  name="cpaixu" value="{{item.cpaixu}}" /></td>';
+	html+='<td><img onclick="del_r(this)" class="addspic" src="static/asset/images/del.png" style="width:22px;height:22px;"/></td>';
+	html+="</tr>";
+	obj.append(html);
+}
+function del_r(obj){
+	var tr=$(obj).parent().parent();
+	tr.addClass('seltr');
+	var seltr=$("[name=detail]").find('tbody').find('tr.seltr');
+	seltr.remove();
+
+}
+
+</script>
+
+{% endblock %}
+	
