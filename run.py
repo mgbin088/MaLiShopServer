@@ -14,7 +14,7 @@ reload(basic)
 from basic import public
 
 ROOT,bugcode,DEBUG,CLIENT_NAME,nc_L = public.ROOT,public.bugcode,public.DEBUG,public.CLIENT_NAME,public.nc_L
-showhoutai,showapi,showupload,requ,a_showupload=public.showhoutai,public.showapi,public.showupload,public.requ,public.a_showupload
+showadmin,showapi,showupload,requ,a_showupload=public.showadmin,public.showapi,public.showupload,public.requ,public.a_showupload
 htinload,apiinload,upinload,adinload,a_upinload=public.htinload,public.apiinload,public.upinload,public.adinload,public.a_upinload
 dict_to_xml,paynotify=public.dict_to_xml,public.paynotify
 
@@ -29,9 +29,17 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RTYj'
 
 
 
-@app.route('/')
-def index():
-    return redirect('admin/login')
+@app.route('/',methods=['GET', 'POST'])
+def admin_():
+    return redirect('/login')
+
+
+@app.route('/<string:viewid>/',methods=['GET', 'POST'])
+def viewid(viewid):
+    try:
+        return showadmin(viewid)
+    except:
+        return bugcode(traceback)
 
 
 @app.route('/api/<int:subid>', methods=['GET','POST'])
@@ -83,8 +91,7 @@ def pay(subid):
 
 
 
-from admin.routes import admin
-app.register_blueprint(admin,url_prefix='/admin')
+
 
 
 
