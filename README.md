@@ -47,3 +47,5 @@ ESKTOP-0UBJBRH:/etc/apache2# vim sites-enabled/000-default.conf
 更多的使用，请自行研究。
 如果是生产环境,建议采用nginx代理，apache开多端口，负载均衡。这样更耐操。要是还想超耐操，只要服务器配置够强，可以在一台服务器同时安装几个apache，这样做负载均衡，就绝对没问题了。
 
+![image](https://cdn.maliapi.cn/image/maligithubdemo.png)
+
