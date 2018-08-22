@@ -44,11 +44,17 @@ ESKTOP-0UBJBRH:/etc/apache2# vim sites-enabled/000-default.conf
 ####  安装ubuntu 16.04 下的
  安装环境为ubuntu 16.04
 安装 数据库参考  https://www.postgresql.org/download/linux/ubuntu/
-Create the file /etc/apt/sources.list.d/pgdg.list and add a line for the repository
+
+Create the file /etc/apt/sources.list.d/pgdg.list and add a line for the repository+
+
 deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main
+
 Import the repository signing key, and update the package lists
+
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
 sudo apt-get update
+
 #我安装的是9.5，如果您机器配置够建议完全按照上边的官方链接安装 
 sudo apt-get install postgresql-9.5      安装 9.5的命令
 我这里安装好会有一行红字，提示的是安装的路径和日志路径
