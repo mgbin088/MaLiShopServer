@@ -25,10 +25,10 @@ ESKTOP-0UBJBRH:/etc/apache2# vim sites-enabled/000-default.conf
 ############################### 看到配置文件的DocumentRoot /var/www/html  在这一行下边配置如下
        
 ```
- WSGIDaemonProcess MaLiShop threads=5
-        WSGIScriptAlias / /var/games/MaLiShop/run.py                                                                                                             
-        <Directory /var/games/MaLiShop>
-                WSGIProcessGroup MaLiShop
+ WSGIDaemonProcess MaLiShopServer threads=5
+        WSGIScriptAlias / /var/games/MaLiShopServer/run.py                                                                                                             
+        <Directory /var/games/MaLiShopServer>
+                WSGIProcessGroup MaLiShopServer
                 WSGIApplicationGroup %{GLOBAL}
                 WSGIScriptReloading On
                 Require all granted
@@ -90,15 +90,17 @@ cd /var
  sudo mkdir games   #因为默认没有这个目录就要建一下
 cd games   
 
- sudo git clone https://github.com/eoen/MaLiShop-Server.git
+ sudo git clone https://github.com/eoen/MaLiShopServer.git
+ 
 sudo vim config.py
-CLIENT_NAME = 'MaLiShop-Server'  确认项目名已修改。
+
+CLIENT_NAME = 'MaLiShopServer'  确认项目名已修改。
 scott='postgres'#用户名    您上边的    ALTER USER postgres  这个postgres就行
 tiger = 'your_password'#密码
 host = '127.0.0.1'#地址  这个就行
 修改完，保存退出。
-现在恢复数据库。新建一个名叫MaLiShop-Server数据库
-然后从项目的sql目录下的数据备份文件恢复到MaLiShop-Server数据库
+现在恢复数据库。新建一个名叫MaLiShopServer数据库
+然后从项目的sql目录下的数据备份文件恢复到MaLiShopServer数据库
 注意：云服务器的防火墙要放进放出5432
 我是在windows下用pgadmin3连接数据库进行恢复的。
 然后运行    pip3 install -r requirements.txt      安装相关依赖包。
@@ -109,15 +111,18 @@ host = '127.0.0.1'#地址  这个就行
 然后  cd /etc/apache2/sites-enabled/       sudo vim 000-default.conf     这里默认只有这一个文件
 注意，如果上边修改了端口，那<VirtualHost *:80>  这个80也要改成刚才修改的那个端口。
 然后在   DocumentRoot /var/www/html   下边添加以下配置
- WSGIDaemonProcess MaLiShop-Server threads=5
-        WSGIScriptAlias / /var/games/MaLiShop-Server/run.py                                                                                                     
-        <Directory /var/games/MaLiShop-Server>
-                WSGIProcessGroup MaLiShop-Server
+'''
+       WSGIDaemonProcess MaLiShopServer threads=5
+ 
+        WSGIScriptAlias / /var/games/MaLiShopServer/run.py                                                                                                     
+        <Directory /var/games/MaLiShopServer>
+                WSGIProcessGroup MaLiShopServer
                 WSGIApplicationGroup %{GLOBAL}
                 WSGIScriptReloading On
                 Require all granted
 
         </Directory>
+        '''
 然后保存退出
 重启postgrsql   和apache2服务
  sudo service postgresql restart
