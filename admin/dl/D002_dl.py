@@ -101,8 +101,7 @@ class cD002_dl(cBASE_DL):
         pk = self.pk
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
+
         
         
         #获取表单参数
@@ -115,16 +114,6 @@ class cD002_dl(cBASE_DL):
         dateend = self.GP('dateend')  # 结束时间
 
 
-
-
-        
-        if not (save_flag == save_flag2):
-            #为FALSE时,当前请求为重刷新
-            return dR
-        
-        # if danhao == '':
-        #     dR['R'] = '1'
-        #     dR['MSG'] = '请输入角色名字'
         
         data = {
                 'goodsid':int(goodsid)

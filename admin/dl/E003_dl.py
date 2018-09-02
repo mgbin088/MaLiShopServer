@@ -94,19 +94,12 @@ class cE003_dl(cBASE_DL):
         return L
     
     def local_add_save(self):
-        
 
-        """
-        <p>这里是local 表单 ，add 模式下的保存处理</p>
-        """
-        
-        #这些是操作权限
         dR={'R':'','MSG':'申请单 保存成功','B':'1','isadd':'','furl':''}  
         pk = self.pk
-        #dR={'R':'','MSG':'','isadd':''}
+
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
+
         
         
         #获取表单参数
@@ -122,15 +115,6 @@ class cE003_dl(cBASE_DL):
         sort=self.GP('sort')
         container = self.GP('container')  # 内容
 
-
-
-        # if not (save_flag == save_flag2):
-        #     #为FALSE时,当前请求为重刷新
-        #     return dR
-        
-        # if danhao == '':
-        #     dR['R'] = '1'
-        #     dR['MSG'] = '请输入角色名字'
         
         data = {
                 'fenlei':fenlei

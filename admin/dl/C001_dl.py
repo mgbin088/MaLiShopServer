@@ -118,8 +118,7 @@ class cC001_dl(cBASE_DL):
         pk = self.pk
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
+
         
         
         #获取表单参数

@@ -80,8 +80,7 @@ class cG001_dl(cBASE_DL):
 
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
+
         
         
         #获取表单参数
@@ -91,16 +90,6 @@ class cG001_dl(cBASE_DL):
         mchid=self.GP('mchid')#微信支付商户号
         mchkey=self.GP('mchkey')#微信支付商户秘钥
 
-
-
-        
-        # if not (save_flag == save_flag2):
-        #     #为FALSE时,当前请求为重刷新
-        #     return dR
-        
-        # if danhao == '':
-        #     dR['R'] = '1'
-        #     dR['MSG'] = '请输入角色名字'
         
         data = {
                 'appid':appid

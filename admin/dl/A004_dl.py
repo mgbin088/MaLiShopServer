@@ -85,13 +85,7 @@ class cA004_dl(cBASE_DL):
         """ % pk
         if pk != '':
             L = self.db.fetch( sql )
-        # else:
-        #     timeStamp = time.time()
-        #     timeArray = time.localtime(timeStamp)
-        #     danhao = time.strftime("%Y%m%d%H%M%S", timeArray)
-        #
-        #     #L['danhao']='cgdd'+danhao
-        #     L['danhao'] = ''
+
         return L
     
     def local_add_save(self):
@@ -106,8 +100,7 @@ class cA004_dl(cBASE_DL):
         pk = self.pk
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
+
         
         
         #获取表单参数
@@ -126,14 +119,6 @@ class cA004_dl(cBASE_DL):
         eaddnumber = self.GP('eaddnumber')  #数量外
         eaddamount = self.GP('eaddamount')  # 数量外价格
 
-
-        # if not (save_flag == save_flag2):
-        #     #为FALSE时,当前请求为重刷新
-        #     return dR
-        
-        # if danhao == '':
-        #     dR['R'] = '1'
-        #     dR['MSG'] = '请输入角色名字'
         
         data = {
                 'name':name

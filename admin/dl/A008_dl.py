@@ -92,34 +92,14 @@ class cA008_dl(cBASE_DL):
         pk = self.pk
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
+
         
         
         #获取表单参数
         continuous=self.GP('continuous')#连续签到:
         score=self.GP('score')#积分
 
-        #
-        # sp_bh=self.GP('sp_bh')#商品编号
-        # sp_type=self.GP('sp_type')#商品类型
-        # candi=self.GP('candi')#产地
-        # num=self.GP('num')#数量
-        # dw=self.GP('dw')#单位
-        # gys_id = self.GP('gys_id')  # 供应商ID
-        # money=self.GP('money')#进货价格
-        # in_date=self.GP('in_date')#进货时间
-        # beizhu=self.GP('beizhu')#备注
 
-
-        
-        # if not (save_flag == save_flag2):
-        #     #为FALSE时,当前请求为重刷新
-        #     return dR
-        
-        # if danhao == '':
-        #     dR['R'] = '1'
-        #     dR['MSG'] = '请输入角色名字'
         
         data = {
                 'continuous':continuous
