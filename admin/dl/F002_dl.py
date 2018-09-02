@@ -114,9 +114,7 @@ class cF002_dl(cBASE_DL):
         pk = self.pk
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
-        
+
         
         #获取表单参数
         fenlei=self.GP('fenlei','')#分类
@@ -135,14 +133,7 @@ class cF002_dl(cBASE_DL):
 
 
 
-        # if not (save_flag == save_flag2):
-        #     #为FALSE时,当前请求为重刷新
-        #     return dR
-        
-        # if danhao == '':
-        #     dR['R'] = '1'
-        #     dR['MSG'] = '请输入角色名字'
-        
+
         data = {
                 'fenlei':fenlei
                 ,'title':title
@@ -162,9 +153,9 @@ class cF002_dl(cBASE_DL):
                 ,'usr_id':self.usr_id
 
         }
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
         data['pic'] = pic
         #from werkzeug import secure_filename
         # try:
@@ -195,9 +186,7 @@ class cF002_dl(cBASE_DL):
             data.pop('utime')
 
             self.db.insert('cms_doc' , data)
-            #pk = self.db.insertid('cms_doc_id')#这个的格式是表名_自增字段
-            #dR['isadd'] = 1
-        #self.listdata_save(pk,danhao)
+
         dR['pk'] = pk
         
         return dR

@@ -61,8 +61,7 @@ class cH002_dl(cBASE_DL):
         self.pageNo=self.GP('pageNo','')
         if self.pageNo=='':self.pageNo='1'
         self.pageNo=int(self.pageNo)
-        if self.qqid!='' and len(self.QNL) > 0:
-            sql+= self.QNL + " LIKE '%%%s%%' "%(self.qqid)
+
         #ORDER BY 
         if self.orderby!='':
             sql+=' ORDER BY %s %s' % (self.orderby,self.orderbydir)

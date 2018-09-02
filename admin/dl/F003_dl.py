@@ -109,8 +109,7 @@ class cF003_dl(cBASE_DL):
         pk = self.pk
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
+
         
         
         #获取表单参数
@@ -128,13 +127,6 @@ class cF003_dl(cBASE_DL):
 
 
 
-        # if not (save_flag == save_flag2):
-        #     #为FALSE时,当前请求为重刷新
-        #     return dR
-        
-        # if danhao == '':
-        #     dR['R'] = '1'
-        #     dR['MSG'] = '请输入角色名字'
         
         data = {
                 'fenlei':fenlei
@@ -155,9 +147,9 @@ class cF003_dl(cBASE_DL):
                 ,'usr_id':self.usr_id
 
         }
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
 
         from werkzeug import secure_filename
         try:

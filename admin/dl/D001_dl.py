@@ -132,9 +132,9 @@ class cD001_dl(cBASE_DL):
                 ,'usr_id':self.usr_id
 
         }
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
 
         if pk != '':  #update
             #如果是更新，就去掉cid，ctime 的处理.

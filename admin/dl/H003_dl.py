@@ -61,8 +61,7 @@ class cH003_dl(cBASE_DL):
         self.pageNo=self.GP('pageNo','')
         if self.pageNo=='':self.pageNo='1'
         self.pageNo=int(self.pageNo)
-        if self.qqid!='' and len(self.QNL) > 0:
-            sql+= self.QNL + " LIKE '%%%s%%' "%(self.qqid)
+
 
         #ORDER BY
         if self.orderby!='':
@@ -107,8 +106,7 @@ class cH003_dl(cBASE_DL):
         pk = self.pk
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
+
         
         
         #获取表单参数
@@ -118,9 +116,7 @@ class cH003_dl(cBASE_DL):
         status  = self.REQUEST.get('status','')  #状态
         respw =self.REQUEST.get('respw','')#恢复密码
 
-        # if not (save_flag == save_flag2):
-        #     #为FALSE时,当前请求为重刷新
-        #     return dR
+
 		#判断login_id重复
         if pk != '':  #update
             sql="SELECT count(login_id) FROM users WHERE login_id='%s'  AND usr_id !=%s"%(login_id,pk)

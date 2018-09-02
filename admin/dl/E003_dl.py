@@ -135,9 +135,9 @@ class cE003_dl(cBASE_DL):
                 ,'usr_id':self.usr_id
 
         }
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
 
         from werkzeug import secure_filename
         try:

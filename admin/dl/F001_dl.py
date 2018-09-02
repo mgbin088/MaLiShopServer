@@ -99,9 +99,7 @@ class cF001_dl(cBASE_DL):
         pk = self.pk
         #dR={'R':'','MSG':'','isadd':''}
         dR={'R':'','MSG':''}
-        save_flag = self.REQUEST.get("save_flag").strip()
-        save_flag2 = self.cookie.getcookie("__flag")
-        
+
         
         #获取表单参数
         name=self.GP('name')#名称
@@ -159,9 +157,9 @@ class cF001_dl(cBASE_DL):
                 ,'level':int(level)
                 ,'memo':memo
         }
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
 
 
         if pk != '':  #update

@@ -56,14 +56,7 @@ class cC005_dl(cBASE_DL):
         self.pid = self.GP('pid',0)
         if int(self.pid)!=0:
             sql +="and (g.pid=%s or g.id=%s) "%(self.pid,self.pid)
-        # self.orderbydir = self.GP('orderbydir','')
-        # self.pageNo=self.GP('pageNo','')
-        # if self.pageNo=='':self.pageNo='1'
-        # self.pageNo=int(self.pageNo)
-        # #ORDER BY
-        # if self.orderby!='':
-        #     sql+=' ORDER BY %s %s' % (self.orderby,self.orderbydir)
-        # else:
+
         sql+="order by g.level,g.id "
 
         #l,t=self.db.select(sql)
@@ -171,9 +164,9 @@ class cC005_dl(cBASE_DL):
                 ,'level':int(level)
         }
 
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
 
         if pk != '':  #update
             #如果是更新，就去掉cid，ctime 的处理.

@@ -93,9 +93,9 @@ class cG002_dl(cBASE_DL):
                 ,'domain':domain
              }
 
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
         pk=''
         sql="select id from qiniu where usr_id=%s"%self.usr_id
         l,t=self.db.select(sql)

@@ -57,9 +57,7 @@ class cC002_dl(cBASE_DL):
            where COALESCE(D.del_flag,0)!=1 and  D.usr_id=%s
         """%self.usr_id
         
-        if self.qqid != '' and len(self.QNL) > 0:
-            sql += self.QNL + "AND LIKE '%%%s%%' " % (self.qqid)
-        # ORDER BY 
+
         if self.orderby != '':
             sql += ' ORDER BY %s %s' % (self.orderby, self.orderbydir)
         else:
@@ -192,9 +190,9 @@ class cC002_dl(cBASE_DL):
 
         }
 
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
 
         if pk != '':  # update
             data['uid']=self.usr_id

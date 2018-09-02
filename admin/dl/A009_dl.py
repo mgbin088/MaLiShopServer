@@ -44,19 +44,7 @@ class cA009_dl(cBASE_DL):
             left join mtc_t m on m.id=s.code and m.type='ZFZSGZ'
             where  COALESCE(s.del_flag,0)!=1  and s.usr_id=%s
         """%self.usr_id
-        # self.qqid = self.GP('qqid','')
-        # self.orderby = self.GP('orderby','')
-        # self.orderbydir = self.GP('orderbydir','')
-        # self.pageNo=self.GP('pageNo','')
-        # if self.pageNo=='':self.pageNo='1'
-        # self.pageNo=int(self.pageNo)
-        # if self.qqid!='' and len(self.QNL) > 0:
-        #     sql+= self.QNL + " LIKE '%%%s%%' "%(self.qqid)
-        # #ORDER BY
-        # if self.orderby!='':
-        #     sql+=' ORDER BY %s %s' % (self.orderby,self.orderbydir)
-        # else:
-        #     sql+=" ORDER BY r.role_id DESC"
+
         
         L,iTotal_length,iTotal_Page,pageNo,select_size=self.db.select_for_grid(sql,self.pageNo)
         PL=[pageNo,iTotal_Page,iTotal_length,select_size]
@@ -120,9 +108,9 @@ class cA009_dl(cBASE_DL):
                 ,'utime': self.getToday(9)
         }
 
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
 
         if pk != '':  #update
             #如果是更新，就去掉cid，ctime 的处理.

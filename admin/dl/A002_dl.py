@@ -109,9 +109,9 @@ class cA002_dl(cBASE_DL):
 
         }
 
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
         pk=''
         sql="select id from shop_set where usr_id=%s"%self.usr_id
         l,t=self.db.select(sql)

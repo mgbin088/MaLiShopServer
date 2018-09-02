@@ -60,16 +60,12 @@ class cA006_dl(cBASE_DL):
         if self.pageNo=='':
             self.pageNo='1'
         self.pageNo=int(self.pageNo)
-        # if self.qqid!='' and len(self.QNL) > 0:
-        #     sql+= self.QNL + " LIKE '%%%s%%' "%(self.qqid)
+
         if self.qqid!='':
             sql+= "and name LIKE '%%%s%%' "%(self.qqid)
         if self.status!='':
             sql+= "and status=%s "%(self.status)
-        # #ORDER BY
-        # if self.orderby!='':
-        #     sql+=' ORDER BY %s %s' % (self.orderby,self.orderbydir)
-        # else:
+
         sql+=" ORDER BY id DESC"
         
         L,iTotal_length,iTotal_Page,pageNo,select_size=self.db.select_for_grid(sql,self.pageNo)
@@ -157,9 +153,9 @@ class cA006_dl(cBASE_DL):
                 'usr_id':self.usr_id
 
         }
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
         if pk != '':  #update
             #如果是更新，就去掉cid，ctime 的处理.
             data.pop('cid')

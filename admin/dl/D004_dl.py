@@ -137,9 +137,9 @@ class cD004_dl(cBASE_DL):
 
         }
 
-        for k in list(data):
-            if data[k] == '':
-                data.pop(k)
+        # for k in list(data):
+        #     if data[k] == '':
+        #         data.pop(k)
 
         if pk != '':  #update
             #如果是更新，就去掉cid，ctime 的处理.
